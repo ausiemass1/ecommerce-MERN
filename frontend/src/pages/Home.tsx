@@ -14,7 +14,7 @@ function Home() {
       .then(res => setProducts(res.data));
   }, []);
   return (
-    <div className="container">
+    <div className="">
       <div className="row">
         
         {/* Sidebar */}
