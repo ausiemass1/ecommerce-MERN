@@ -16,7 +16,7 @@ function Home() {
   }, []);
   return (
     <div className="">
-<Hero/><br /><br /><div className="divider"></div><br />
+<Hero/><br /><br />
       <div className="row">
         
         {/* Sidebar */}
