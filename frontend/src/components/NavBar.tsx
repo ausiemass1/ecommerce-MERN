@@ -37,6 +37,7 @@ function Navbar() {
       </ul>
 
       {/* Navbar */}
+      <div className="navbar-fixed">
       <nav>
         <div className="nav-wrapper">
           {/* Logo */}
@@ -73,6 +74,7 @@ function Navbar() {
           </ul>
         </div>
       </nav>
+      </div>
     </>
   );
 }

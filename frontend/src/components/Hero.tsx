@@ -1,5 +1,6 @@
 const Hero = () => {
     return (
+       
       <div className="hero center">
         <div className="hero-overlay">
           <div className="container">
@@ -14,6 +15,7 @@ const Hero = () => {
           </div>
         </div>
       </div>
+    
     );
   };
   
