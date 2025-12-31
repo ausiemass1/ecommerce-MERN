@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import M from "materialize-css";
 
 function Navbar() {
@@ -7,6 +8,17 @@ function Navbar() {
     const dropdowns = document.querySelectorAll(".dropdown-trigger");
     M.Dropdown.init(dropdowns);
   }, []);
+
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+  const handleLogout = (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+    logout();
+  }
 
   return (
     <>
@@ -20,7 +32,7 @@ function Navbar() {
         </li>
         <li className="divider"></li>
         <li>
-          <Link to="/logout">Logout</Link>
+          <Link to="/logout" onClick={handleLogout}>Logout</Link>
         </li>
       </ul>
 
@@ -43,6 +55,9 @@ function Navbar() {
             <li>
               <Link to="/login">Login</Link>
             </li>
+            <li>
+          <Link to="/logout" onClick={handleLogout}>Logout</Link>
+        </li>
 
             <li>
               <Link to="/products">Products</Link>
@@ -50,11 +65,7 @@ function Navbar() {
 
             {/* Dropdown Trigger */}
             <li>
-              <a
-                className="dropdown-trigger"
-                href="#!"
-                data-target="dropdown1"
-              >
+              <a className="dropdown-trigger" href="#!" data-target="dropdown1">
                 Account
                 <i className="material-icons right">arrow_drop_down</i>
               </a>
