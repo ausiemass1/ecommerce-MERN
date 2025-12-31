@@ -2,6 +2,7 @@ import ProductCard from "../components/ProductCard";
 import Sidebar from "../components/sideBar";
 import { useEffect, useState } from "react";
 import { type Product } from "../types/Product";
+import Hero from "../components/Hero";
 import axios from "axios"
 
 
@@ -15,6 +16,7 @@ function Home() {
   }, []);
   return (
     <div className="">
+<Hero/><br /><br /><div className="divider"></div><br />
       <div className="row">
         
         {/* Sidebar */}
