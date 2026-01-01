@@ -7,6 +7,9 @@ function Navbar() {
   useEffect(() => {
     const dropdowns = document.querySelectorAll(".dropdown-trigger");
     M.Dropdown.init(dropdowns);
+
+    const sidenavs = document.querySelectorAll(".sidenav");
+    M.Sidenav.init(sidenavs);
   }, []);
 
   const navigate = useNavigate();
@@ -18,7 +21,21 @@ function Navbar() {
   const handleLogout = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     logout();
+  
   };
+
+  
+
+  const closeSidenav = () => {
+    const sidenavElem = document.querySelector(".sidenav");
+  
+    if (!sidenavElem) return;
+  
+    const instance = M.Sidenav.getInstance(sidenavElem);
+    instance?.close();
+  };
+  
+  
 
   return (
     <>
@@ -37,16 +54,40 @@ function Navbar() {
           </Link>
         </li>
       </ul>
+      {/* Mobile side Nav */}
+      <ul className="sidenav" id="mobile-menu">
+        <li>
+          <Link to="/" onClick={closeSidenav}>Home</Link>
+        </li>
+        <li>
+          <Link to="/products" onClick={closeSidenav}>Products</Link>
+        </li>
+        <li>
+          <Link to="/register" onClick={closeSidenav}>Register</Link>
+        </li>
+        <li>
+          <Link to="/login" onClick={closeSidenav}>Login</Link>
+        </li>
+        <li>
+          <a href="#!" onClick={handleLogout}>
+            Logout
+          </a>
+        </li>
+      </ul>
 
       {/* Navbar */}
       <div className="navbar-fixed">
         <nav className="custom-navbar">
           <div className="nav-wrapper container">
+            <a href="#" data-target="mobile-menu" className="sidenav-trigger">
+              <i className="material-icons">menu</i>
+            </a>
+
             <Link to="/" className="brand-logo">
               Logo
             </Link>
 
-            <ul className="right hide-on-med-and-down">
+            <ul id="nav-mobile" className="right hide-on-med-and-down">
               <li>
                 <Link to="/">Home</Link>
               </li>
@@ -55,6 +96,9 @@ function Navbar() {
               </li>
               <li>
                 <Link to="/register">Register</Link>
+              </li>
+              <li>
+                <Link to="/cart">Cart</Link>
               </li>
               <li>
                 <Link to="/login">Login</Link>
