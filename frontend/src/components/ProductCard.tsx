@@ -34,8 +34,7 @@ const ProductCard: React.FC<Props> = ({ product }) => {
             <i className="material-icons right">close</i>
           </span>
           <p>
-            Here is some more information about this product that is only
-            revealed once clicked on.
+            {product.description}
           </p>
         </div>
 
