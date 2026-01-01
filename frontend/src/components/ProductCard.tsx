@@ -1,10 +1,16 @@
 import { type Product } from "../types/Product";
+import api from "../utils/api"
 
 interface Props {
   product: Product;
 }
 
 const ProductCard: React.FC<Props> = ({ product }) => {
+
+  const addToCart = async () => {
+    await api.post(`/cart/add/${product._id}`);
+  }; 
+
   return (
     <div className="col s12 m6 l4">
       <div className="card product-card">
@@ -22,7 +28,7 @@ const ProductCard: React.FC<Props> = ({ product }) => {
 
         {/* ✅ card-action as sibling */}
         <div className="card-action product-card-bottom">
-          <a href="#">Add to cart</a>
+          <a href="#" onClick={addToCart}>Add to cart</a>
           <span className="green-text product-price">
             ${product.price.toFixed(2)}
           </span>
