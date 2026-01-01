@@ -38,7 +38,7 @@ router.post("/add/:productId", auth, async (req: AuthRequest, res) => {
       productId,
       name: product.name,
       price: product.price,
-      quantity: 1
+      quantity: 1,
     });
   }
 
