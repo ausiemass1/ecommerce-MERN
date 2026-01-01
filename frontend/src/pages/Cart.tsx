@@ -24,13 +24,6 @@ const Cart = () => {
       .then(res => setCart(res.data))
       .finally(() => setLoading(false));
   }, []);
-  // testing
-  useEffect(() => {
-    api.get("/cart").then(res => {
-      console.log("CART RESPONSE:", res.data);
-      setCart(res.data);
-    });
-  }, []);
   
 
   if (loading) {
