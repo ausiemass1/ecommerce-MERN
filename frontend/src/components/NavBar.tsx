@@ -15,10 +15,10 @@ function Navbar() {
     localStorage.removeItem("token");
     navigate("/login");
   };
-  const handleLogout = (e: { preventDefault: () => void; }) => {
+  const handleLogout = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     logout();
-  }
+  };
 
   return (
     <>
@@ -32,47 +32,53 @@ function Navbar() {
         </li>
         <li className="divider"></li>
         <li>
-          <Link to="/logout" onClick={handleLogout}>Logout</Link>
+          <Link to="/logout" onClick={handleLogout}>
+            Logout
+          </Link>
         </li>
       </ul>
 
       {/* Navbar */}
-      <nav>
-        <div className="nav-wrapper">
-          {/* Logo */}
-          <Link to="/" className="brand-logo">
-            Logo
-          </Link>
+      <div className="navbar-fixed">
+        <nav className="custom-navbar">
+          <div className="nav-wrapper container">
+            <Link to="/" className="brand-logo">
+              Logo
+            </Link>
 
-          <ul className="right hide-on-med-and-down">
-            <li>
-              <Link to="/">Home</Link>
-            </li>
+            <ul className="right hide-on-med-and-down">
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/products">Products</Link>
+              </li>
+              <li>
+                <Link to="/register">Register</Link>
+              </li>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/logout" onClick={handleLogout}>
+                  Logout
+                </Link>
+              </li>
 
-            <li>
-              <Link to="/register">Register</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-          <Link to="/logout" onClick={handleLogout}>Logout</Link>
-        </li>
-
-            <li>
-              <Link to="/products">Products</Link>
-            </li>
-
-            {/* Dropdown Trigger */}
-            <li>
-              <a className="dropdown-trigger" href="#!" data-target="dropdown1">
-                Account
-                <i className="material-icons right">arrow_drop_down</i>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+              <li>
+                <a
+                  className="dropdown-trigger"
+                  href="#!"
+                  data-target="dropdown1"
+                >
+                  Account
+                  <i className="material-icons right">arrow_drop_down</i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
     </>
   );
 }
