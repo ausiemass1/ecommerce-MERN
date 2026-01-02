@@ -33,7 +33,7 @@ export const createCheckoutSession = async (
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items: lineItems,
-      success_url: "http://localhost:5173/success",
+      success_url: "http://localhost:5173/",
       cancel_url: "http://localhost:5173/cart",
     });
 
