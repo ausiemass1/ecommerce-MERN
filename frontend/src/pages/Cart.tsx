@@ -42,6 +42,17 @@ const Cart = () => {
       </div>
     );
   }
+  const handleCheckout = async () => {
+    try {
+      const res = await api.post("/checkout");
+      console.log("Checkout response:", res.data);
+      window.location.href = res.data.url;
+    } catch (err: any) {
+      console.error("Checkout error:", err.response?.data || err);
+      alert("Checkout failed");
+    }
+  };
+  
 
   return (
     <div className="container">
@@ -100,7 +111,7 @@ const Cart = () => {
         </div>
 
         <div className="card-action right-align">
-          <button className="btn teal">Checkout</button>
+          <button className="btn teal" onClick={handleCheckout}>Checkout</button>
         </div>
       </div>
     </div>
