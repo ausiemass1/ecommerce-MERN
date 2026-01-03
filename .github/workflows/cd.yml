@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # ---------- BUILD (DEPLOY MUST BUILD TOO) ----------
+      # ---------- FRONTEND ----------
       - name: Install frontend dependencies
         working-directory: frontend
         run: npm install
@@ -22,6 +22,7 @@ jobs:
         working-directory: frontend
         run: npm run build
 
+      # ---------- BACKEND ----------
       - name: Install backend dependencies
         working-directory: backend
         run: npm install
@@ -30,8 +31,22 @@ jobs:
         working-directory: backend
         run: npm run build
 
+      # ---------- ASSEMBLE DEPLOY DIRECTORY ----------
+      - name: Prepare deployment folder
+        run: |
+          mkdir -p mern.austinmasamhiri.com
+          cp -r frontend/dist/* mern.austinmasamhiri.com/
+          cp -r backend/dist mern.austinmasamhiri.com/
+          cp backend/package.json backend/package-lock.json mern.austinmasamhiri.com/
+
+      # ---------- DEBUG (IMPORTANT – TEMPORARY) ----------
+      - name: Verify deploy contents
+        run: |
+          echo "===== DEPLOY DIRECTORY ====="
+          ls -R mern.austinmasamhiri.com
+
       # ---------- DEPLOY ----------
-      - name: Deploy frontend + backend to cPanel
+      - name: Deploy to cPanel
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_HOST }}
