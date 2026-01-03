@@ -1,4 +1,4 @@
-name: CD - Deploy MERN App
+name: CD - Deploy MERN App (FTP)
 
 on:
   push:
@@ -34,37 +34,17 @@ jobs:
       # ---------- ASSEMBLE DEPLOY DIRECTORY ----------
       - name: Prepare deployment folder
         run: |
-          mkdir -p mern.austinmasamhiri.com
-          cp -r frontend/dist/* mern.austinmasamhiri.com/
-          cp -r backend/dist mern.austinmasamhiri.com/
-          cp backend/package.json backend/package-lock.json mern.austinmasamhiri.com/
+          mkdir -p deploy
+          cp -r frontend/dist/* deploy/
+          cp -r backend/dist deploy/
+          cp backend/package.json backend/package-lock.json deploy/
 
-      # ---------- DEBUG (IMPORTANT – TEMPORARY) ----------
-      - name: Verify deploy contents
-        run: |
-          echo "===== DEPLOY DIRECTORY ====="
-          ls -R mern.austinmasamhiri.com
-
-      # ---------- DEPLOY ----------
-      - name: Deploy to cPanel
-        uses: appleboy/scp-action@v0.1.7
+      # ---------- DEPLOY VIA FTP ----------
+      - name: Deploy to cPanel via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          source: |
-            mern.austinmasamhiri.com/*
-          target: /home/hillside/mern.austinmasamhiri.com
-
-      # ---------- INSTALL & RESTART ----------
-      - name: Install production deps & restart Node app
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          script: |
-            cd /home/hillside/mern.austinmasamhiri.com
-            npm install --production
-            mkdir -p tmp
-            touch tmp/restart.txt
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: deploy/
+          server-dir: /mern.austinmasamhiri.com/
