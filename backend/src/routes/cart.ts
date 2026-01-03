@@ -45,7 +45,14 @@ router.post("/add/:productId", auth, async (req: AuthRequest, res) => {
   cart.totalQuantity += 1;
   cart.totalPrice += product.price;
 
-  await redis.set(key, JSON.stringify(cart));
+  await redis.set(
+    key,
+    JSON.stringify(cart),
+    { ex: 60 } // 1 minute (testing)
+  );
+  
+  
+
 
   res.json(cart);
 });

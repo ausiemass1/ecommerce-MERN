@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
     "dev": "ts-node-dev src/server.ts"
   },
   "keywords": [],
@@ -13,12 +14,14 @@
   "type": "commonjs",
   "dependencies": {
     "@types/dotenv": "^6.1.1",
+    "@upstash/redis": "^1.36.0",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
-    "mongoose": "^8.20.4"
+    "mongoose": "^8.20.4",
+    "stripe": "^20.1.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
