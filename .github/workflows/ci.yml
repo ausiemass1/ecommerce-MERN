@@ -1,0 +1,36 @@
+name: CI - Build MERN App
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ---------- FRONTEND ----------
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm install
+
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+
+      # ---------- BACKEND ----------
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm install
+
+      - name: Build backend (TypeScript)
+        working-directory: backend
+        run: npm run build

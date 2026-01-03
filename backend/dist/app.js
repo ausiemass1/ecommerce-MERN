@@ -1,0 +1,21 @@
+"use strict";
+// import dotenv from "dotenv";
+// dotenv.config(); 
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
+const product_routes_1 = __importDefault(require("./routes/product.routes"));
+const auth_1 = __importDefault(require("./routes/auth"));
+const cart_1 = __importDefault(require("./routes/cart"));
+const checkout_routes_1 = __importDefault(require("./routes/checkout.routes"));
+const app = (0, express_1.default)();
+app.use((0, cors_1.default)());
+app.use(express_1.default.json());
+app.use("/api/products", product_routes_1.default);
+app.use("/api/auth", auth_1.default);
+app.use("/api/cart", cart_1.default);
+app.use("/api", checkout_routes_1.default);
+exports.default = app;

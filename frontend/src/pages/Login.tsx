@@ -11,7 +11,7 @@ function Login() {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:4000/api/auth/login", {
+      const res = await axios.post("https://mern.austinmasamhiri.com/api/auth/login", {
         email,
         password
       });
