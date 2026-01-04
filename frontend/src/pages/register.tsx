@@ -20,7 +20,7 @@ const Register = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    await axios.post("https://mern.austinmasamhiri.com/api/auth/register", {
+    await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/register`, {
       email,
       password
     });

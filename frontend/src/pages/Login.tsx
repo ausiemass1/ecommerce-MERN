@@ -11,14 +11,14 @@ function Login() {
     e.preventDefault();
 
     try {
-      const res = await axios.post("https://mern.austinmasamhiri.com/api/auth/login", {
-        email,
-        password
-      });
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, {
+          email,
+          password,
+        }
+      );
 
       localStorage.setItem("token", res.data.token);
-      navigate('/products')
-
+      navigate("/products");
     } catch (err: any) {
       console.error(err);
     }
@@ -26,33 +26,31 @@ function Login() {
 
   return (
     <div className="container">
-    <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
+      <form onSubmit={handleSubmit}>
+        <h2>Login</h2>
 
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-        required
-      />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-        required
-      />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
 
-      <button type="submit" className="btn">Login</button>
-
-      
-    </form>
+        <button type="submit" className="btn">
+          Login
+        </button>
+      </form>
     </div>
   );
 }
 
 export default Login;
-
-  
