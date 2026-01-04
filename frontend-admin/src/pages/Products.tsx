@@ -10,7 +10,7 @@ const ProductsPage: React.FC = () => {
   
 
   const fetchProducts = async () => {
-    const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`);
+    const res = await axios.get(`https://mern.austinmasamhiri.com/api/products`);
   
     if (Array.isArray(res.data)) {
       setProducts(res.data);
@@ -29,7 +29,7 @@ const ProductsPage: React.FC = () => {
 
   // const handleDelete = async (id: string) => {
   //   if (!confirm("Delete this product?")) return;
-  //   `${import.meta.env.VITE_API_BASE_URL}/api/admin/products/${id}`;
+  //   `https://mern.austinmasamhiri.com/api/admin/products/${id}`;
   //   fetchProducts();
   // };
   const handleDelete = async (id: string) => {
@@ -37,7 +37,7 @@ const ProductsPage: React.FC = () => {
   
     try {
       await axios.delete(
-        `${import.meta.env.VITE_API_BASE_URL}/api/admin/products/${id}`
+        `https://mern.austinmasamhiri.com/api/admin/products/${id}`
       );
   
       fetchProducts(); // refresh table
