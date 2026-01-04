@@ -19,10 +19,10 @@ const AdminNavbar = () => {
         {/* Desktop links */}
         <ul className="right hide-on-med-and-down">
           <li>
-            <Link to="/">Dashboard</Link>
+            <Link to="/admin">Dashboard</Link>
           </li>
           <li>
-            <Link to="/products">Products</Link>
+            <Link to="/admin/products">Products</Link>
           </li>
           <li>
             <a href="#!" onClick={logout}>
