@@ -21,6 +21,14 @@ jobs:
       - name: Build frontend
         working-directory: frontend
         run: npm run build
+     # ---------- FRONTEND-ADMIN ----------
+      - name: Install frontend dependencies
+        working-directory: frontend-admin
+        run: npm install
+
+      - name: Build frontend
+        working-directory: frontend-admin
+        run: npm run build
 
       # ---------- BACKEND ----------
       - name: Install backend dependencies
@@ -36,6 +44,7 @@ jobs:
         run: |
           mkdir -p deploy
           cp -r frontend/dist/* deploy/
+          cp -r frontend-admin/dist/* deploy/admin/
           cp -r backend/dist deploy/
           cp backend/package.json backend/package-lock.json deploy/
 
