@@ -7,10 +7,10 @@ import ProductFormModal from "../components/ProductFormModal";
 const ProductsPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const API_BASE = https://mern-ecommerce.onrender.com;
+  
 
   const fetchProducts = async () => {
-    const res = await axios.get(`${API_BASE}/api/products`);
+    const res = await axios.get(`https://mern-ecommerce.onrender.com/api/products`);
   
     if (Array.isArray(res.data)) {
       setProducts(res.data);
