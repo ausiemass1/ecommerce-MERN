@@ -7,7 +7,7 @@ import ProductFormModal from "../components/ProductFormModal";
 const ProductsPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const API_BASE = import.meta.env.VITE_API_BASE_URL;
+  const API_BASE = https://mern-ecommerce.onrender.com;
 
   const fetchProducts = async () => {
     const res = await axios.get(`${API_BASE}/api/products`);
