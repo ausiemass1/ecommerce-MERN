@@ -5,12 +5,12 @@ import { type Product } from "../types/Product";
 
 const Products = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  // const API_BASE = https://mern-ecommerce.onrender.com;
+  // const API_BASE = https://mern.austinmasamhiri.com;
 
 
   useEffect(() => {
     axios
-      .get<Product[]>("https://mern-ecommerce.onrender.com/api/products")
+      .get<Product[]>("https://mern.austinmasamhiri.com/api/products")
       .then(res => setProducts(res.data));
   }, []);
 

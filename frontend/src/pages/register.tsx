@@ -20,7 +20,7 @@ const Register = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    await axios.post(`https://mern-ecommerce.onrender.com/api/auth/register`, {
+    await axios.post(`https://mern.austinmasamhiri.com/api/auth/register`, {
       email,
       password
     });

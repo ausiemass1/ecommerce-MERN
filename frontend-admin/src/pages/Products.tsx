@@ -10,7 +10,7 @@ const ProductsPage: React.FC = () => {
   
 
   const fetchProducts = async () => {
-    const res = await axios.get(`https://mern-ecommerce.onrender.com/api/products`);
+    const res = await axios.get(`https://mern.austinmasamhiri.com/api/products`);
   
     if (Array.isArray(res.data)) {
       setProducts(res.data);
