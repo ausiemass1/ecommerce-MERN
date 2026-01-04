@@ -5,11 +5,12 @@ import { type Product } from "../types/Product";
 
 const Products = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const API_BASE = import.meta.env.VITE_API_BASE_URL;
-  
+  // const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
+
   useEffect(() => {
     axios
-      .get<Product[]>(`${API_BASE}/api/products`)
+      .get<Product[]>(`https://mern-ecommerce.onrender.com/api/products`)
       .then(res => setProducts(res.data));
   }, []);
 
