@@ -11,7 +11,7 @@ function Home() {
 
   useEffect(() => {
     axios
-      .get<Product[]>(`https://mern-ecommerce.onrender.com/api/products`)
+      .get<Product[]>(`https://mern.austinmasamhiri.com/api/products`)
       .then(res => setProducts(res.data));
   }, []);
   return (

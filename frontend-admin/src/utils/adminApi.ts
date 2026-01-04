@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const adminApi = axios.create({
-  baseURL: `https://mern-ecommerce.onrender.com/api/admin`,
+  baseURL: `https://mern.austinmasamhiri.com/api/admin`,
 });
 
 adminApi.interceptors.request.use(
