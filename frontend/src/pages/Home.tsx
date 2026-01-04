@@ -11,7 +11,7 @@ function Home() {
 
   useEffect(() => {
     axios
-      .get<Product[]>("https://mern.austinmasamhiri.com/api/products")
+      .get<Product[]>(`${import.meta.env.VITE_API_BASE_URL}/api/products`)
       .then(res => setProducts(res.data));
   }, []);
   return (
