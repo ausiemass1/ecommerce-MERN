@@ -5,12 +5,12 @@ import { type Product } from "../types/Product";
 
 const Products = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  // const API_BASE = https://mern.austinmasamhiri.com;
+  // const API_BASE = ${import.meta.env.VITE_API_BASE_URL};
 
 
   useEffect(() => {
     axios
-      .get<Product[]>("https://mern.austinmasamhiri.com/api/products")
+      .get<Product[]>("${import.meta.env.VITE_API_BASE_URL}/api/products")
       .then(res => setProducts(res.data));
   }, []);
 

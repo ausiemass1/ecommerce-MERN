@@ -10,7 +10,7 @@ const ProductsPage: React.FC = () => {
   
 
   const fetchProducts = async () => {
-    const res = await axios.get(`https://mern.austinmasamhiri.com/api/products`);
+    const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`);
   
     if (Array.isArray(res.data)) {
       setProducts(res.data);
@@ -27,11 +27,26 @@ const ProductsPage: React.FC = () => {
     fetchProducts();
   }, []);
 
+  // const handleDelete = async (id: string) => {
+  //   if (!confirm("Delete this product?")) return;
+  //   `${import.meta.env.VITE_API_BASE_URL}/api/admin/products/${id}`;
+  //   fetchProducts();
+  // };
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this product?")) return;
-    await axios.delete(`/products/${id}`);
-    fetchProducts();
+  
+    try {
+      await axios.delete(
+        `${import.meta.env.VITE_API_BASE_URL}/api/admin/products/${id}`
+      );
+  
+      fetchProducts(); // refresh table
+    } catch (err) {
+      console.error("Delete failed:", err);
+      alert("Failed to delete product");
+    }
   };
+  
 
   const handleSave = async (product: Partial<Product>) => {
     if (product._id) {
