@@ -43,6 +43,7 @@ jobs:
       - name: Prepare deployment folder
         run: |
           mkdir -p deploy
+          mkdir -p deploy/admin
           cp -r frontend/dist/* deploy/
           cp -r frontend-admin/dist/* deploy/admin/
           cp -r backend/dist deploy/
