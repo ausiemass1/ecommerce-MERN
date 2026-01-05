@@ -3,6 +3,7 @@ import axios from "axios";
 import type { Product } from "../types/Product";
 import ProductTable from "../components/ProductsTable";
 import ProductFormModal from "../components/ProductFormModal";
+import type { ProductFormData } from "../types/ProductFormData";
 
 const ProductsPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -10,7 +11,7 @@ const ProductsPage: React.FC = () => {
   
 
   const fetchProducts = async () => {
-    const res = await axios.get(`https://mern.austinmasamhiri.com/api/products`);
+    const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`);
   
     if (Array.isArray(res.data)) {
       setProducts(res.data);
@@ -27,17 +28,12 @@ const ProductsPage: React.FC = () => {
     fetchProducts();
   }, []);
 
-  // const handleDelete = async (id: string) => {
-  //   if (!confirm("Delete this product?")) return;
-  //   `https://mern.austinmasamhiri.com/api/admin/products/${id}`;
-  //   fetchProducts();
-  // };
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this product?")) return;
   
     try {
       await axios.delete(
-        `https://mern.austinmasamhiri.com/api/admin/products/${id}`
+        `${import.meta.env.VITE_API_BASE_URL}/api/admin/products/${id}`
       );
   
       fetchProducts(); // refresh table
@@ -47,17 +43,63 @@ const ProductsPage: React.FC = () => {
     }
   };
   
+  // const handleSave = async (product: Partial<ProductFormData>) => {
+  //   const formData = new FormData();
+  
+  //   formData.append("name", product.name!);
+  //   formData.append("price", String(product.price));
+  //   formData.append("description", product.description || "");
+  
+  //   if (product.imageFile) {
+  //     formData.append("image", product.imageFile);
+  //   }
+  
+  //   await axios.post(
+  //     `${import.meta.env.VITE_API_BASE_URL}/api/admin/products`,
+  //     formData,
+  //     { headers: { "Content-Type": "multipart/form-data" } }
+  //   );
+  
+  //   fetchProducts();
+  // };
 
-  const handleSave = async (product: Partial<Product>) => {
-    if (product._id) {
-      await axios.put(`/products/${product._id}`, product);
-    } else {
-      await axios.post("/products", product);
+
+  const handleSave = async (product: ProductFormData) => {
+    const formData = new FormData();
+  
+    formData.append("name", product.name);
+    formData.append("price", String(product.price));
+    formData.append("description", product.description || "");
+  
+    if (product.imageFile) {
+      formData.append("image", product.imageFile);
     }
-    setSelectedProduct(null);
-    fetchProducts();
+  
+    try {
+      if (product._id) {
+        // ✅ UPDATE
+        await axios.put(
+          `${import.meta.env.VITE_API_BASE_URL}/api/admin/products/${product._id}`,
+          formData,
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
+      } else {
+        // ✅ CREATE
+        await axios.post(
+          `${import.meta.env.VITE_API_BASE_URL}/api/admin/products`,
+          formData,
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
+      }
+  
+      setSelectedProduct(null);
+      fetchProducts();
+    } catch (err) {
+      console.error("Save failed:", err);
+      alert("Failed to save product");
+    }
   };
-
+  
   return (
     <div className="container">
       <div className="row valign-wrapper">

@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
 import M from "materialize-css";
-import type { Product } from "../types/Product";
+import type { ProductFormData } from "../types/ProductFormData";
 
 interface Props {
-  product: Product | null;
-  onSave: (product: Partial<Product>) => void;
+  product: ProductFormData | null;
+  onSave: (product: ProductFormData) => void;
   onClose: () => void;
 }
 
 const ProductFormModal: React.FC<Props> = ({ product, onSave, onClose }) => {
-  const [form, setForm] = useState<Partial<Product>>({});
+  const [form, setForm] = useState<ProductFormData>({
+    name: "",
+    price: 0,
+    description: "",
+  });
 
   useEffect(() => {
     const elem = document.getElementById("product-modal");
@@ -30,8 +34,8 @@ const ProductFormModal: React.FC<Props> = ({ product, onSave, onClose }) => {
 
         <div className="input-field">
           <input
-            value={form.name || ""}
-            onChange={e => setForm({ ...form, name: e.target.value })}
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
           />
           <label className="active">Name</label>
         </div>
@@ -39,8 +43,10 @@ const ProductFormModal: React.FC<Props> = ({ product, onSave, onClose }) => {
         <div className="input-field">
           <textarea
             className="materialize-textarea"
-            value={form.description || ""}
-            onChange={e => setForm({ ...form, description: e.target.value })}
+            value={form.description}
+            onChange={(e) =>
+              setForm({ ...form, description: e.target.value })
+            }
           />
           <label className="active">Description</label>
         </div>
@@ -48,24 +54,33 @@ const ProductFormModal: React.FC<Props> = ({ product, onSave, onClose }) => {
         <div className="input-field">
           <input
             type="number"
-            value={form.price || ""}
-            onChange={e => setForm({ ...form, price: Number(e.target.value) })}
+            step="0.01" 
+            value={form.price}
+            onChange={(e) =>
+              setForm({ ...form, price: Number(e.target.value) })
+            }
           />
           <label className="active">Price</label>
         </div>
 
-        <div className="input-field">
-          <input
-            placeholder="Comma separated image URLs"
-            value={form.images?.join(",") || ""}
-            onChange={e =>
-              setForm({
-                ...form,
-                images: e.target.value.split(",").map(i => i.trim()),
-              })
-            }
-          />
-          <label className="active">Images</label>
+        {/* ✅ Image upload */}
+        <div className="file-field input-field">
+          <div className="btn">
+            <span>Image</span>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  imageFile: e.target.files?.[0],
+                })
+              }
+            />
+          </div>
+          <div className="file-path-wrapper">
+            <input className="file-path validate" placeholder="Upload product image" />
+          </div>
         </div>
       </div>
 
@@ -73,10 +88,7 @@ const ProductFormModal: React.FC<Props> = ({ product, onSave, onClose }) => {
         <button className="btn-flat" onClick={onClose}>
           Cancel
         </button>
-        <button
-          className="btn green"
-          onClick={() => onSave(form)}
-        >
+        <button className="btn green" onClick={() => onSave(form)}>
           Save
         </button>
       </div>
