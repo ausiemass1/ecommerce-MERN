@@ -43,20 +43,31 @@ const ProductsPage: React.FC = () => {
     }
   };
   
-
-  // const handleSave = async (product: Partial<Product>) => {
-  //   if (product._id) {
-  //     await axios.put(`/products/${product._id}`, product);
-  //   } else {
-  //     await axios.post("/products", product);
+  // const handleSave = async (product: Partial<ProductFormData>) => {
+  //   const formData = new FormData();
+  
+  //   formData.append("name", product.name!);
+  //   formData.append("price", String(product.price));
+  //   formData.append("description", product.description || "");
+  
+  //   if (product.imageFile) {
+  //     formData.append("image", product.imageFile);
   //   }
-  //   setSelectedProduct(null);
+  
+  //   await axios.post(
+  //     `${import.meta.env.VITE_API_BASE_URL}/api/admin/products`,
+  //     formData,
+  //     { headers: { "Content-Type": "multipart/form-data" } }
+  //   );
+  
   //   fetchProducts();
   // };
-  const handleSave = async (product: Partial<ProductFormData>) => {
+
+
+  const handleSave = async (product: ProductFormData) => {
     const formData = new FormData();
   
-    formData.append("name", product.name!);
+    formData.append("name", product.name);
     formData.append("price", String(product.price));
     formData.append("description", product.description || "");
   
@@ -64,15 +75,31 @@ const ProductsPage: React.FC = () => {
       formData.append("image", product.imageFile);
     }
   
-    await axios.post(
-      `${import.meta.env.VITE_API_BASE_URL}/api/admin/products`,
-      formData,
-      { headers: { "Content-Type": "multipart/form-data" } }
-    );
+    try {
+      if (product._id) {
+        // ✅ UPDATE
+        await axios.put(
+          `${import.meta.env.VITE_API_BASE_URL}/api/admin/products/${product._id}`,
+          formData,
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
+      } else {
+        // ✅ CREATE
+        await axios.post(
+          `${import.meta.env.VITE_API_BASE_URL}/api/admin/products`,
+          formData,
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
+      }
   
-    fetchProducts();
+      setSelectedProduct(null);
+      fetchProducts();
+    } catch (err) {
+      console.error("Save failed:", err);
+      alert("Failed to save product");
+    }
   };
-
+  
   return (
     <div className="container">
       <div className="row valign-wrapper">
