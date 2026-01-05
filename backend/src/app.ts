@@ -21,28 +21,28 @@ app.use("/api/cart", cartRoutes);
 app.use("/api", checkoutRoutes);
 app.use("/api/admin/products", adminProductRoutes);
 
-// ---------- USER SPA ----------
-const clientPath = path.join(__dirname, "..");
+// ---------- USER SPA (ROOT) ----------
+const rootPath = path.join(__dirname, "..");
 
 // Serve user static files
-app.use(express.static(clientPath));
+app.use(express.static(rootPath));
 
 // ---------- ADMIN SPA ----------
-const adminPath = path.join(__dirname, "../admin");
+const adminPath = path.join(rootPath, "admin");
 
 // Serve admin static files
 app.use("/admin", express.static(adminPath));
 
-// ---------- SPA FALLBACKS (ORDER MATTERS) ----------
+// ---------- SPA FALLBACKS ----------
 
 // Admin SPA fallback
 app.get(/^\/admin(\/.*)?$/, (req, res) => {
   res.sendFile(path.join(adminPath, "index.html"));
 });
 
-// User SPA fallback (everything except /api and /admin)
-app.get(/^\/(?!api|admin).*/, (req, res) => {
-  res.sendFile(path.join(clientPath, "index.html"));
+// User SPA fallback (everything else except /api)
+app.get(/^\/(?!api).*/, (req, res) => {
+  res.sendFile(path.join(rootPath, "index.html"));
 });
 
 export default app;
