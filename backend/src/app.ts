@@ -22,7 +22,7 @@ app.use("/api", checkoutRoutes);
 app.use("/api/admin/products", adminProductRoutes);
 
 // ---------- USER SPA ----------
-const clientPath = path.join(__dirname, "../client");
+const clientPath = path.join(__dirname, "..");
 
 // Serve user static files
 app.use(express.static(clientPath));
