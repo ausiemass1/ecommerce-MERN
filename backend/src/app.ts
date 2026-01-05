@@ -24,11 +24,11 @@ app.use("/api/admin/products", adminProductRoutes);
 // ---------- ADMIN SPA ----------
 const adminPath = path.join(__dirname, "../admin");
 
-// Serve static files
+// Static assets
 app.use("/admin", express.static(adminPath));
 
-// SPA fallback (must be last)
-app.get("/admin/*", (req, res) => {
+// SPA fallback (REGEX — SAFE)
+app.get(/^\/admin(\/.*)?$/, (req, res) => {
   res.sendFile(path.join(adminPath, "index.html"));
 });
 
