@@ -14,22 +14,35 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ---------- API ROUTES ----------
+// ---------- API ROUTES (ALWAYS FIRST) ----------
 app.use("/api/products", productRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api", checkoutRoutes);
 app.use("/api/admin/products", adminProductRoutes);
 
+// ---------- USER SPA ----------
+const clientPath = path.join(__dirname, "../client");
+
+// Serve user static files
+app.use(express.static(clientPath));
+
 // ---------- ADMIN SPA ----------
 const adminPath = path.join(__dirname, "../admin");
 
-// Static assets
+// Serve admin static files
 app.use("/admin", express.static(adminPath));
 
-// SPA fallback (REGEX — SAFE)
+// ---------- SPA FALLBACKS (ORDER MATTERS) ----------
+
+// Admin SPA fallback
 app.get(/^\/admin(\/.*)?$/, (req, res) => {
   res.sendFile(path.join(adminPath, "index.html"));
+});
+
+// User SPA fallback (everything except /api and /admin)
+app.get(/^\/(?!api|admin).*/, (req, res) => {
+  res.sendFile(path.join(clientPath, "index.html"));
 });
 
 export default app;
