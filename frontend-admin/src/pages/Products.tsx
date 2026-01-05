@@ -11,7 +11,7 @@ const ProductsPage: React.FC = () => {
   
 
   const fetchProducts = async () => {
-    const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`);
+    const res = await axios.get(`https://mern.austinmasamhiri.com/api/products`);
   
     if (Array.isArray(res.data)) {
       setProducts(res.data);
@@ -33,7 +33,7 @@ const ProductsPage: React.FC = () => {
   
     try {
       await axios.delete(
-        `${import.meta.env.VITE_API_BASE_URL}/api/admin/products/${id}`
+        `https://mern.austinmasamhiri.com/api/admin/products/${id}`
       );
   
       fetchProducts(); // refresh table
@@ -79,14 +79,14 @@ const ProductsPage: React.FC = () => {
       if (product._id) {
         // ✅ UPDATE
         await axios.put(
-          `${import.meta.env.VITE_API_BASE_URL}/api/admin/products/${product._id}`,
+          `https://mern.austinmasamhiri.com/api/admin/products/${product._id}`,
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
       } else {
         // ✅ CREATE
         await axios.post(
-          `${import.meta.env.VITE_API_BASE_URL}/api/admin/products`,
+          `https://mern.austinmasamhiri.com/api/admin/products`,
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
