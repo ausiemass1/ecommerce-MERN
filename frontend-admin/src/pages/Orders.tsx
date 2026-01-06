@@ -2,33 +2,23 @@ import { useEffect, useState } from "react";
 import M from "materialize-css";
 import OrdersTable from "../components/OrdersTable";
 import type { Order } from "../types/OrderTypes";
-import axios from "axios";
+import { fetchOrders } from "../utils/orders.api";
 
 const OrdersPage: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
 
-  const fetchOrders = async (): Promise<void> => {
-    try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/admin/orders`
-      );
-
-      if (Array.isArray(res.data)) {
-        setOrders(res.data);
-      } else if (Array.isArray(res.data.orders)) {
-        setOrders(res.data.orders);
-      } else {
-        console.error("Unexpected orders response:", res.data);
+  useEffect(() => {
+    const loadOrders = async () => {
+      try {
+        const data = await fetchOrders();
+        setOrders(data);
+      } catch (err) {
+        console.error("Failed to load orders:", err);
         setOrders([]);
       }
-    } catch (err) {
-      console.error("Failed to fetch orders:", err);
-      setOrders([]);
-    }
-  };
+    };
 
-  useEffect(() => {
-    fetchOrders(); 
+    loadOrders();
   }, []);
 
   useEffect(() => {
