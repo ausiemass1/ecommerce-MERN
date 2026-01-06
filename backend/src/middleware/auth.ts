@@ -5,11 +5,8 @@ export interface AuthRequest extends Request {
   user?: { id: string };
 }
 
-export const auth = (
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction
-) => {
+// auth middleware
+export const auth = (req: AuthRequest, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader?.startsWith("Bearer ")) {
@@ -19,10 +16,9 @@ export const auth = (
   const token = authHeader.split(" ")[1];
 
   try {
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET!
-    ) as { id: string };
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
+      id: string;
+    };
 
     req.user = { id: decoded.id };
     next();
