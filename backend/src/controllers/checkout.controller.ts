@@ -2,9 +2,9 @@ import { Response } from "express";
 import stripe from "../config/stripe";
 import redis from "../config/redis";
 import { AuthRequest } from "../middleware/auth";
-
 import { Cart } from "../types/cart";
 
+// create checkout session and redirect to stripe
 export const createCheckoutSession = async (
   req: AuthRequest,
   res: Response
@@ -19,7 +19,7 @@ export const createCheckoutSession = async (
       return res.status(400).json({ message: "Cart is empty" });
     }
 
-    const lineItems = cart.items.map(item => ({
+    const lineItems = cart.items.map((item) => ({
       price_data: {
         currency: "usd",
         product_data: {
@@ -38,9 +38,13 @@ export const createCheckoutSession = async (
     });
 
     res.json({ url: session.url });
-
   } catch (err) {
     console.error("Checkout error:", err);
     res.status(500).json({ message: "Checkout failed" });
   }
+};
+
+// create webhook TODO: implement webhook logic
+export const createWebhook = async (req: AuthRequest, res: Response) => {
+  res.send("Webhook created");
 };
