@@ -25,6 +25,9 @@ const AdminNavbar = () => {
             <Link to="/admin/products">Products</Link>
           </li>
           <li>
+            <Link to="/admin/orders">Orders</Link>
+          </li>
+          <li>
             <a href="#!" onClick={logout}>
               Logout
             </a>

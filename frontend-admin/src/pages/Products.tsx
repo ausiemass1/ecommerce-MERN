@@ -5,13 +5,13 @@ import ProductTable from "../components/ProductsTable";
 import ProductFormModal from "../components/ProductFormModal";
 import type { ProductFormData } from "../types/ProductFormData";
 
-const ProductsPage: React.FC = () => {
+const Products: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   
 
   const fetchProducts = async () => {
-    const res = await axios.get(`https://mern.austinmasamhiri.com/api/products`);
+    const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`);
   
     if (Array.isArray(res.data)) {
       setProducts(res.data);
@@ -33,7 +33,7 @@ const ProductsPage: React.FC = () => {
   
     try {
       await axios.delete(
-        `https://mern.austinmasamhiri.com/api/admin/products/${id}`
+        `${import.meta.env.VITE_API_BASE_URL}/api/admin/products/${id}`
       );
   
       fetchProducts(); // refresh table
@@ -79,14 +79,14 @@ const ProductsPage: React.FC = () => {
       if (product._id) {
         // ✅ UPDATE
         await axios.put(
-          `https://mern.austinmasamhiri.com/api/admin/products/${product._id}`,
+          `${import.meta.env.VITE_API_BASE_URL}/api/admin/products/${product._id}`,
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
       } else {
         // ✅ CREATE
         await axios.post(
-          `https://mern.austinmasamhiri.com/api/admin/products`,
+          `${import.meta.env.VITE_API_BASE_URL}/api/admin/products`,
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
@@ -128,4 +128,4 @@ const ProductsPage: React.FC = () => {
   );
 };
 
-export default ProductsPage;
+export default Products;
