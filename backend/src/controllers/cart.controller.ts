@@ -2,6 +2,8 @@ import { Response, Request } from "express";
 import redis from "../config/redis";
 import {  AuthRequest } from "../middleware/auth";
 import Product from "../models/Product";
+
+// add to cart
 export const  addToCart =async (req: AuthRequest, res: Response) => {
     const userId = req.user!.id;
     const { productId } = req.params;
@@ -50,3 +52,20 @@ export const  addToCart =async (req: AuthRequest, res: Response) => {
   
     res.json(cart);
   }
+
+  //get cart
+  export const getCart = async (req: AuthRequest, res: Response) => {
+    const userId = req.user!.id;
+    const key = `cart:${userId}`;
+    const cartData = await redis.get<any>(key);
+  
+    const cart = cartData ?? {
+      items: [],
+      totalQuantity: 0,
+      totalPrice: 0
+    };
+    
+  
+    res.json(cart);
+  }
+  
