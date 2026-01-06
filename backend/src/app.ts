@@ -2,11 +2,12 @@ import express from "express";
 import cors from "cors";
 import path from "path";
 
-import productRoutes from "./routes/product.routes";
+import productRoutes from "./routes/user.product.routes";
 import authRoutes from "./routes/auth";
 import cartRoutes from "./routes/cart";
 import checkoutRoutes from "./routes/checkout.routes";
-import adminProductRoutes from "./routes/admin/product.routes";
+import adminProductRoutes from "./routes/admin/admin.product.routes";
+import adminOrderRoutes from "./routes/admin/admin.order.routes";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api", checkoutRoutes);
 app.use("/api/admin/products", adminProductRoutes);
+app.use("/api/admin/orders", adminOrderRoutes);
 
 // ---------- USER SPA (ROOT) ----------
 const rootPath = path.join(__dirname, "..");

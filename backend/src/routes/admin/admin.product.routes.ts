@@ -1,5 +1,5 @@
 import  { Router } from "express";
-import { deleteProduct } from "../../controllers/admin/product.controller";
+import { deleteProduct } from "../../controllers/admin/admin.product.controller";
 import { auth } from "../../middleware/auth";
 import { upload } from "../../middleware/upload";
 import Product from "../../models/Product";
