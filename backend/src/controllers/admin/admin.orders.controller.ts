@@ -21,3 +21,17 @@ export const getAllOrders = async (req: Request, res: Response) => {
       pages: Math.ceil(total / limit)
     });
   };
+
+  export const getOrderById = async (req: Request, res: Response) => {
+    try {
+      const order = await Order.findById(req.params.id);
+  
+      if (!order) {
+        return res.status(404).json({ message: "Order not found" });
+      }
+  
+      res.json(order);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch order" });
+    }
+  };

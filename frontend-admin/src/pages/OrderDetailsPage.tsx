@@ -33,7 +33,8 @@ const OrderDetailsPage: React.FC = () => {
                   <li className="collection-item" key={index}>
                     {item.name} × {item.quantity}
                     <span className="secondary-content">
-                      ${(item.price / 100).toFixed(2)}
+                      {/* TO DO  this should be the unit price , it needs to be fixed*/}
+                      ${(order.amount_total / 100).toFixed(2)}
                     </span>
                   </li>
                 ))}
