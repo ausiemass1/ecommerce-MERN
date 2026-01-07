@@ -8,14 +8,22 @@ import cartRoutes from "./routes/cart";
 import checkoutRoutes from "./routes/checkout.routes";
 import adminProductRoutes from "./routes/admin/admin.product.routes";
 import adminOrderRoutes from "./routes/admin/admin.order.routes";
+import webhookRoutes from "./routes/webhook.routes";
 
 const app = express();
 
-// ---------- GLOBAL MIDDLEWARE ----------
+/* 🔥 STRIPE WEBHOOK — MUST BE FIRST */
+app.use(
+  "/api/webhooks/stripe",
+  express.raw({ type: "application/json" }),
+  webhookRoutes
+);
+
+/* ---------- GLOBAL MIDDLEWARE ---------- */
 app.use(cors());
 app.use(express.json());
 
-// ---------- API ROUTES (ALWAYS FIRST) ----------
+/* ---------- API ROUTES ---------- */
 app.use("/api/products", productRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/cart", cartRoutes);
@@ -23,26 +31,17 @@ app.use("/api", checkoutRoutes);
 app.use("/api/admin/products", adminProductRoutes);
 app.use("/api/admin/orders", adminOrderRoutes);
 
-// ---------- USER SPA (ROOT) ----------
+/* ---------- STATIC FILES ---------- */
 const rootPath = path.join(__dirname, "..");
-
-// Serve user static files
 app.use(express.static(rootPath));
 
-// ---------- ADMIN SPA ----------
 const adminPath = path.join(rootPath, "admin");
-
-// Serve admin static files
 app.use("/admin", express.static(adminPath));
 
-// ---------- SPA FALLBACKS ----------
-
-// Admin SPA fallback
 app.get(/^\/admin(\/.*)?$/, (req, res) => {
   res.sendFile(path.join(adminPath, "index.html"));
 });
 
-// User SPA fallback (everything else except /api)
 app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(rootPath, "index.html"));
 });
