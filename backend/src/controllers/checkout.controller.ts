@@ -61,23 +61,18 @@ export const createCheckoutSession = async (
 };
 
 /* ---------------------------------------------
-   STRIPE WEBHOOK (MATCHES WORKING JS VERSION)
+   STRIPE WEBHOOK HANDLER
 ---------------------------------------------- */
 export const createWebhook = async (req: Request, res: Response) => {
   console.log("🔥 WEBHOOK HIT");
   console.log("🔥🔥🔥 WEBHOOK ENDPOINT HIT 🔥🔥🔥");
   console.log("🟢 Mongoose readyState:", mongoose.connection.readyState);
 
-
   const signature = req.headers["stripe-signature"] as string;
   let event: Stripe.Event;
 
   try {
-    event = stripe.webhooks.constructEvent(
-      req.body,
-      signature,
-      webhookSecret
-    );
+    event = stripe.webhooks.constructEvent(req.body, signature, webhookSecret);
   } catch (err: any) {
     console.error("❌ Signature verification failed:", err.message);
     return res.sendStatus(400);
@@ -102,7 +97,7 @@ export const createWebhook = async (req: Request, res: Response) => {
       customerEmail: session.customer_details?.email,
       customerName: session.customer_details?.name,
       shipping: session.shipping_details,
-      items: lineItems.data.map(item => ({
+      items: lineItems.data.map((item) => ({
         name: item.description,
         quantity: item.quantity,
         amount_total: item.amount_total,
