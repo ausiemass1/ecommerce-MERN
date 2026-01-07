@@ -44,9 +44,10 @@ export const createCheckoutSession = async (
       shipping_address_collection: {
         allowed_countries: ["NZ", "US"],
       },
+     
 
-      success_url: "http://localhost:5173/",
-      cancel_url: "http://localhost:5173/cart",
+      success_url: `${process.env.CLIENT_URL}/`,
+      cancel_url: `${process.env.CLIENT_URL}/cart`,
 
       metadata: {
         userId,
