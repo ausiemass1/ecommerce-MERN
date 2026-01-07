@@ -1,6 +1,13 @@
 import mongoose from "mongoose";
 const orderSchema = new mongoose.Schema({
-  sessionId: String,
+  // sessionId: String,
+  sessionId: {
+    type: String,
+    required: true,
+    unique: true,
+    index: true,
+  },
+  
   paymentIntentId: String,
   customerEmail: String,
   customerName: String,
