@@ -64,12 +64,23 @@ export const createWebhook = async (req: Request, res: Response) => {
           customerEmail: session.customer_details?.email,
           customerName: session.customer_details?.name,
           shipping: session.shipping_details ?? null,
+          // items: lineItems.data.map((item) => ({
+          //   name: item.description,
+          //   quantity: item.quantity,
+          //   amount_total: item.amount_total,
+          //   priceId: item.price?.id,
+          // })),
+
+
           items: lineItems.data.map((item) => ({
             name: item.description,
-            quantity: item.quantity,
-            amount_total: item.amount_total,
-            priceId: item.price?.id,
+            quantity: item.quantity ?? 1,
+            unit_price: item.price?.unit_amount ?? 0,
+            total_price: item.amount_total ?? 0,
+            currency: item.currency,
           })),
+          
+          
           currency: session.currency,
           amount_total: session.amount_total,
           payment_status: session.payment_status,
