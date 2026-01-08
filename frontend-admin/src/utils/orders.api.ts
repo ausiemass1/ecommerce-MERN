@@ -16,8 +16,8 @@ export const fetchOrderById = async (id: string): Promise<Order> => {
 /**
  * Fetch all admin orders
  */
-export const fetchOrders = async (): Promise<Order[]> => {
-  const res = await axios.get(`${BASE_URL}/api/admin/orders`);
+export const fetchOrders = async (page = 1, limit = 10): Promise<Order[]> => {
+  const res = await axios.get(`${BASE_URL}/api/admin/orders?page=${page}&limit=${limit}`);
 
   if (Array.isArray(res.data)) {
     return res.data;
@@ -30,3 +30,13 @@ export const fetchOrders = async (): Promise<Order[]> => {
   console.error("Unexpected orders response:", res.data);
   return [];
 };
+
+// export const fetchOrders = async (page = 1, limit = 10) => {
+//   const res = await fetch(
+//     `/api/admin/orders?page=${page}&limit=${limit}`
+//   );
+
+//   if (!res.ok) throw new Error("Failed to fetch orders");
+
+//   return res.json();
+// };
