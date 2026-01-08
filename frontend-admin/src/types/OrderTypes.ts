@@ -1,6 +1,5 @@
 
 // export interface OrderItem {
-//     productId: string;
 //     name: string;
 //     quantity: number;
 //     price: number;
@@ -8,32 +7,47 @@
   
 //   export interface Order {
 //     _id: string;
-//     sessionId: string;
-//     paymentIntentId: string;
-//     customerEmail: string;
 //     customerName: string;
+//     customerEmail: string;
 //     items: OrderItem[];
-//     currency: string;
 //     amount_total: number;
-//     amount_subtotal: number;
-//     payment_status: "paid" | "unpaid" | "failed" | "refunded";
+//     payment_status: string;
 //     createdAt: string;
 //   }
-  
 
 export interface OrderItem {
-    name: string;
-    quantity: number;
-    price: number;
-  }
+  name: string;
+  quantity: number;
+  unit_price: number;
+  total_price: number;
+  currency: string;
+}
+
+export interface ShippingAddress {
+  name?: string;
+  phone?: string;
+  address?: {
+    line1?: string;
+    line2?: string;
+    city?: string;
+    state?: string;
+    postal_code?: string;
+    country?: string;
+  };
+}
+
+export interface Order {
+  _id: string;
+  customerName?: string;
+  customerEmail?: string;
+  payment_status: string;
+  amount_total: number;
+  currency: string;
+  items: OrderItem[];
+  shipping?: ShippingAddress | null;
+  createdAt: string;
+}
+
   
-  export interface Order {
-    _id: string;
-    customerName: string;
-    customerEmail: string;
-    items: OrderItem[];
-    amount_total: number;
-    payment_status: string;
-    createdAt: string;
-  }
-  
+
+
