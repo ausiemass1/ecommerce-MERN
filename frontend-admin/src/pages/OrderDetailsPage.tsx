@@ -34,7 +34,7 @@ const OrderDetailsPage: React.FC = () => {
                     {item.name} × {item.quantity}
                     <span className="secondary-content">
                       {/* TO DO  this should be the unit price , it needs to be fixed*/}
-                      ${(order.amount_total / 100).toFixed(2)}
+                      ${(item.unit_price / 100).toFixed(2)}
                     </span>
                   </li>
                 ))}
@@ -58,6 +58,36 @@ const OrderDetailsPage: React.FC = () => {
             </div>
           </div>
         </div>
+         {/* -------- SHIPPING ADDRESS -------- */}
+         {order.shipping?.address && (
+            <div className="card">
+              <div className="card-content">
+                <span className="card-title">Shipping Address</span>
+
+                {order.shipping.name && (
+                  <p><strong>{order.shipping.name}</strong></p>
+                )}
+
+                <p>{order.shipping.address.line1}</p>
+
+                {order.shipping.address.line2 && (
+                  <p>{order.shipping.address.line2}</p>
+                )}
+
+                <p>
+                  {order.shipping.address.city},{" "}
+                  {order.shipping.address.state}{" "}
+                  {order.shipping.address.postal_code}
+                </p>
+
+                <p>{order.shipping.address.country}</p>
+
+                {order.shipping.phone && (
+                  <p><strong>Phone:</strong> {order.shipping.phone}</p>
+                )}
+              </div>
+            </div>
+          )}
       </div>
     </div>
   );
