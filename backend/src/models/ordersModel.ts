@@ -41,10 +41,21 @@ const orderSchema = new mongoose.Schema({
     }
   },
 
+  // items: [
+  //   {
+  //     name: String,
+  //     quantity: Number,
+  //     amount_total: Number,
+  //     amount_subtotal: Number,
+  //     priceId: String,
+  //   }
+  // ],
+
   items: [
     {
       name: String,
       quantity: Number,
+      unit_price: Number,
       amount_total: Number,
       amount_subtotal: Number,
       priceId: String,
