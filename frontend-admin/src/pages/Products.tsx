@@ -8,8 +8,6 @@ import { fetchProducts } from "../utils/products.api";
 
 const Products: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  // const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const limit = 10;
@@ -20,38 +18,21 @@ const Products: React.FC = () => {
   };
   const [selectedProduct, setSelectedProduct] =
     useState<ProductFormData | null>(null);
-  const refreshProducts = async () => {
-    const res = await fetchProducts(page, limit);
-    setProducts(res.data);
-    setTotalPages(res.pagination.totalPages);
+
+  const loadProducts = async () => {
+    try {
+      const res = await fetchProducts(page, limit);
+      setProducts(res.data);
+      setTotalPages(res.pagination.totalPages);
+    } catch (err) {
+      console.error("Failed to load products:", err);
+      setProducts([]);
+    }
   };
 
   useEffect(() => {
-    refreshProducts();
+    loadProducts();
   }, [page]);
-
-  useEffect(() => {
-    const loadOrders = async () => {
-      try {
-        const res = await fetchProducts(page, limit);
-        setProducts(res.data);
-        setTotalPages(res.pagination.totalPages);
-      } catch (err) {
-        console.error("Failed to load orders:", err);
-        setProducts([]);
-      }
-    };
-
-    loadOrders();
-  }, [page]);
-
-  useEffect(() => {
-    M.AutoInit();
-  }, []);
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
 
   //PRODUCT DELETE HANDLER
   const handleDelete = async (id: string) => {
@@ -62,7 +43,7 @@ const Products: React.FC = () => {
         `${import.meta.env.VITE_API_BASE_URL}/api/admin/products/${id}`
       );
 
-      fetchProducts(); // refresh table
+      await loadProducts(); // refresh table
     } catch (err) {
       console.error("Delete failed:", err);
       alert("Failed to delete product");
@@ -101,7 +82,7 @@ const Products: React.FC = () => {
 
       setSelectedProduct(null);
       //fetchProducts();
-      await refreshProducts();
+      await loadProducts();
     } catch (err) {
       console.error("Save failed:", err);
       alert("Failed to save product");
