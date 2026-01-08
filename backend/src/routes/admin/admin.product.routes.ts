@@ -11,7 +11,7 @@ import { upload } from "../../middleware/upload";
 
 const router = Router();
 
-router.post("/", upload.single("image"), async (req, res) => addProduct);
+router.post("/", upload.single("image"), addProduct);
 router.put("/:id", upload.single("image"), updateProduct);
 router.delete("/:id", deleteProduct);
 router.get("/", getAllProducts);

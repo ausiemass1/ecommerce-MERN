@@ -8,11 +8,27 @@ import { fetchProducts } from "../utils/products.api";
 
 const Products: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  // const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const limit = 10;
+  const EMPTY_PRODUCT: ProductFormData = {
+    name: "",
+    description: "",
+    price: 0,
+  };
+  const [selectedProduct, setSelectedProduct] =
+    useState<ProductFormData | null>(null);
+  const refreshProducts = async () => {
+    const res = await fetchProducts(page, limit);
+    setProducts(res.data);
+    setTotalPages(res.pagination.totalPages);
+  };
+
+  useEffect(() => {
+    refreshProducts();
+  }, [page]);
 
   useEffect(() => {
     const loadOrders = async () => {
@@ -32,18 +48,6 @@ const Products: React.FC = () => {
   useEffect(() => {
     M.AutoInit();
   }, []);
-  // const fetchProducts = async (page: number, limit: number) => {
-  //   const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`);
-
-  //   if (Array.isArray(res.data)) {
-  //     setProducts(res.data);
-  //   } else if (Array.isArray(res.data.products)) {
-  //     setProducts(res.data.products);
-  //   } else {
-  //     console.error("Unexpected products response:", res.data);
-  //     setProducts([]);
-  //   }
-  // };
 
   useEffect(() => {
     fetchProducts();
@@ -64,7 +68,7 @@ const Products: React.FC = () => {
       alert("Failed to delete product");
     }
   };
-
+  // PRODUCT ADD AND UPDATE HANDLER
   const handleSave = async (product: ProductFormData) => {
     const formData = new FormData();
 
@@ -96,7 +100,8 @@ const Products: React.FC = () => {
       }
 
       setSelectedProduct(null);
-      fetchProducts();
+      //fetchProducts();
+      await refreshProducts();
     } catch (err) {
       console.error("Save failed:", err);
       alert("Failed to save product");
@@ -111,7 +116,7 @@ const Products: React.FC = () => {
 
         <button
           className="btn green col s6 right"
-          onClick={() => setSelectedProduct({} as Product)}
+          onClick={() => setSelectedProduct(EMPTY_PRODUCT)}
         >
           + Add Product
         </button>
