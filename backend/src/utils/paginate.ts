@@ -1,3 +1,4 @@
+
 import { Model } from "mongoose";
 
 interface PaginateOptions {
@@ -18,9 +19,17 @@ export async function paginate<T>(
     populate,
   }: PaginateOptions
 ) {
-  const skip = (page - 1) * limit;
+  // ✅ SAFETY: ensure valid values
+  const safePage = Math.max(Number(page) || 1, 1);
+  const safeLimit = Math.max(Number(limit) || 10, 1);
 
-  const query = model.find(filter).sort(sort).skip(skip).limit(limit);
+  const skip = (safePage - 1) * safeLimit;
+
+  const query = model
+    .find(filter)
+    .sort(sort)
+    .skip(skip)
+    .limit(safeLimit);
 
   if (populate) {
     query.populate(populate);
@@ -35,9 +44,9 @@ export async function paginate<T>(
     data,
     pagination: {
       totalItems,
-      totalPages: Math.ceil(totalItems / limit),
-      currentPage: page,
-      limit,
+      totalPages: Math.ceil(totalItems / safeLimit),
+      currentPage: safePage,
+      limit: safeLimit,
     },
   };
 }
