@@ -1,7 +1,5 @@
 import "./config/env";
 
-console.log("NODE_ENV:", process.env.NODE_ENV);
-
 import app from "./app";
 import connectDB from "./config/db";
 
