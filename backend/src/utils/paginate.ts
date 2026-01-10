@@ -7,6 +7,7 @@ interface PaginateOptions {
   sort?: any;
   filter?: any;
   populate?: any;
+
 }
 
 export async function paginate<T>(
@@ -44,7 +45,8 @@ export async function paginate<T>(
     data,
     pagination: {
       totalItems,
-      totalPages: Math.ceil(totalItems / safeLimit),
+      // totalPages: Math.ceil(totalItems / safeLimit),
+      totalPages: Math.max(1, Math.ceil(totalItems / safeLimit)),
       currentPage: safePage,
       limit: safeLimit,
     },
