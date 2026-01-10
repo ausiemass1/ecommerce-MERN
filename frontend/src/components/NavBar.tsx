@@ -1,85 +1,103 @@
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import M from "materialize-css";
 
 function Navbar() {
-  useEffect(() => {
-    const dropdowns = document.querySelectorAll(".dropdown-trigger");
-    M.Dropdown.init(dropdowns);
-
-    const sidenavs = document.querySelectorAll(".sidenav");
-    M.Sidenav.init(sidenavs);
-  }, []);
-
   const navigate = useNavigate();
 
-  const logout = () => {
+  // ✅ React-safe auth state
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
+    Boolean(localStorage.getItem("token"))
+  );
+
+  // ✅ Init Materialize ONCE
+  useEffect(() => {
+    M.Dropdown.init(document.querySelectorAll(".dropdown-trigger"), {
+      constrainWidth: false,
+      coverTrigger: false,
+    });
+
+    M.Sidenav.init(document.querySelectorAll(".sidenav"));
+
+    // ✅ Sync login/logout across tabs
+    const onStorageChange = () => {
+      setIsLoggedIn(Boolean(localStorage.getItem("token")));
+    };
+
+    window.addEventListener("storage", onStorageChange);
+    return () => window.removeEventListener("storage", onStorageChange);
+  }, []);
+
+  // ✅ Logout handler
+  const handleLogout = (e: React.MouseEvent) => {
+    e.preventDefault();
     localStorage.removeItem("token");
+    setIsLoggedIn(false);
     navigate("/login");
   };
-  const handleLogout = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    logout();
-  
-  };
 
-  
-
+  // ✅ Close sidenav on mobile click
   const closeSidenav = () => {
-    const sidenavElem = document.querySelector(".sidenav");
-  
-    if (!sidenavElem) return;
-  
-    const instance = M.Sidenav.getInstance(sidenavElem);
+    const elem = document.querySelector(".sidenav");
+    const instance = elem ? M.Sidenav.getInstance(elem) : null;
     instance?.close();
   };
-  
-  
 
   return (
     <>
-      {/* Dropdown Structure */}
-      <ul id="dropdown1" className="dropdown-content">
-        <li>
+      {/* ===== Account Dropdown ===== */}
+      <ul id="account-dropdown" className="dropdown-content">
+        <li key="profile">
           <Link to="/profile">Profile</Link>
         </li>
-        <li>
+        <li key="settings">
           <Link to="/settings">Settings</Link>
         </li>
-        <li className="divider"></li>
-        <li>
-          <Link to="/logout" onClick={handleLogout}>
-            Logout
-          </Link>
-        </li>
-      </ul>
-      {/* Mobile side Nav */}
-      <ul className="sidenav" id="mobile-menu">
-        <li>
-          <Link to="/" onClick={closeSidenav}>Home</Link>
-        </li>
-        <li>
-          <Link to="/products" onClick={closeSidenav}>Products</Link>
-        </li>
-        <li>
-          <Link to="/register" onClick={closeSidenav}>Register</Link>
-        </li>
-        <li>
-          <Link to="/login" onClick={closeSidenav}>Login</Link>
-        </li>
-        <li>
+        <li className="divider" />
+        <li key="logout">
           <a href="#!" onClick={handleLogout}>
             Logout
           </a>
         </li>
       </ul>
 
-      {/* Navbar */}
+      {/* ===== Mobile Sidenav ===== */}
+      <ul className="sidenav" id="mobile-menu">
+        <li key="m-home">
+          <Link to="/" onClick={closeSidenav}>Home</Link>
+        </li>
+
+        <li key="m-products">
+          <Link to="/products" onClick={closeSidenav}>Products</Link>
+        </li>
+
+        {!isLoggedIn && (
+          <>
+            <li key="m-register">
+              <Link to="/register" onClick={closeSidenav}>Register</Link>
+            </li>
+            <li key="m-login">
+              <Link to="/login" onClick={closeSidenav}>Login</Link>
+            </li>
+          </>
+        )}
+
+        {isLoggedIn && (
+          <li key="m-logout">
+            <a href="#!" onClick={handleLogout}>Logout</a>
+          </li>
+        )}
+      </ul>
+
+      {/* ===== Desktop Navbar ===== */}
       <div className="navbar-fixed">
         <nav className="custom-navbar">
           <div className="nav-wrapper container">
-            <a href="#" data-target="mobile-menu" className="sidenav-trigger">
+            <a
+              href="#!"
+              data-target="mobile-menu"
+              className="sidenav-trigger"
+            >
               <i className="material-icons">menu</i>
             </a>
 
@@ -87,33 +105,40 @@ function Navbar() {
               Logo
             </Link>
 
-            <ul id="nav-mobile" className="right hide-on-med-and-down">
-              <li>
+            <ul className="right hide-on-med-and-down">
+              <li key="home">
                 <Link to="/">Home</Link>
               </li>
-              <li>
+
+              <li key="products">
                 <Link to="/products">All Products</Link>
               </li>
-              <li>
-                <Link to="/register">Register</Link>
-              </li>
-              <li>
+
+              <li key="cart">
                 <Link to="/cart">Cart</Link>
               </li>
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-              <li>
-                <Link to="/logout" onClick={handleLogout}>
-                  Logout
-                </Link>
-              </li>
 
-              <li>
+              {/* Logged out */}
+              {!isLoggedIn && (
+                <>
+                  <li key="register">
+                    <Link to="/register">Register</Link>
+                  </li>
+                  <li key="login">
+                    <Link to="/login">Login</Link>
+                  </li>
+                </>
+              )}
+
+              {/* Logged in (never unmounted, only hidden) */}
+              <li
+                key="account"
+                style={{ display: isLoggedIn ? "block" : "none" }}
+              >
                 <a
-                  className="dropdown-trigger"
                   href="#!"
-                  data-target="dropdown1"
+                  className="dropdown-trigger"
+                  data-target="account-dropdown"
                 >
                   Account
                   <i className="material-icons right">arrow_drop_down</i>
