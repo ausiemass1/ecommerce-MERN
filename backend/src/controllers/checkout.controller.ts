@@ -45,8 +45,10 @@ export const createCheckoutSession = async (
         allowed_countries: ["NZ", "US"],
       },
 
-      success_url: `http://localhost:5173/`,
-      cancel_url: `http://localhost:5173/cart`,
+      // success_url: `http://localhost:5173/`,
+      // cancel_url: `http://localhost:5173/cart`,
+      success_url: `${process.env.CLIENT_URL}/`,
+      cancel_url: `${process.env.CLIENT_URL}/cart`,
 
       metadata: {
         userId,
@@ -59,78 +61,3 @@ export const createCheckoutSession = async (
     res.status(500).json({ message: "Checkout failed" });
   }
 };
-
-/* ---------------------------------------------
-   STRIPE WEBHOOK HANDLER (IDEMPOTENT)
----------------------------------------------- */
-// export const createWebhook = async (req: Request, res: Response) => {
-
-//   const signature = req.headers["stripe-signature"] as string;
-//   let event: Stripe.Event;
-
-//   try {
-//     event = stripe.webhooks.constructEvent(
-//       req.body,
-//       signature,
-//       webhookSecret
-//     );
-//   } catch (err: any) {
-//     console.error("❌ Stripe signature verification failed:", err.message);
-//     return res.sendStatus(400);
-//   }
-
-//   if (event.type === "checkout.session.completed") {
-//     try {
-//       const session = event.data.object as Stripe.Checkout.Session & {
-//         shipping_details?: {
-//           name?: string;
-//           phone?: string | null;
-//           address?: Stripe.Address;
-//         };
-//       };
-
-//       console.log("🟢 Session completed:", session.id);
-
-//       // 🔒 IDEMPOTENCY CHECK
-//       const existingOrder = await Order.findOne({
-//         sessionId: session.id,
-//       });
-
-//       if (existingOrder) {
-//         console.log("⚠️ Order already exists:", session.id);
-//         return res.sendStatus(200);
-//       }
-
-//       const lineItems =
-//         await stripe.checkout.sessions.listLineItems(session.id);
-
-//       const order = await Order.create({
-//         sessionId: session.id,
-//         paymentIntentId: session.payment_intent as string,
-//         customerEmail: session.customer_details?.email,
-//         customerName: session.customer_details?.name,
-//         shipping: session.shipping_details,
-//         items: lineItems.data.map((item) => ({
-//           name: item.description,
-//           quantity: item.quantity,
-//           amount_total: item.amount_total,
-//           priceId: item.price?.id,
-//         })),
-//         currency: session.currency,
-//         amount_total: session.amount_total,
-//         payment_status: session.payment_status,
-//       });
-
-//       console.log("✅ Order saved:", order._id);
-//     } catch (err) {
-//       console.error("❌ Order creation failed:", err);
-//     }
-//   }
-
-//   // Stripe ONLY cares about this
-//   res.sendStatus(200);
-// };
-
-
-
-

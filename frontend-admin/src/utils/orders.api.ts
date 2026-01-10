@@ -13,13 +13,32 @@ export type PaginatedResponse<T> = {
   };
 };
 
+/**
+ * Query params supported by admin order search & filters
+ */
+export type OrderQueryParams = {
+  page?: number;
+  limit?: number;
+  orderId?: string;
+  email?: string;
+  status?: string;
+  startDate?: string; // ISO string
+  endDate?: string;   // ISO string
+};
+
 //fetch all orders
 export const fetchOrders = async (
-  page = 1,
-  limit = 10
+  params: OrderQueryParams = {}
 ): Promise<PaginatedResponse<Order>> => {
+  // Build query string safely
+  const query = new URLSearchParams(
+    Object.entries(params)
+      .filter(([_, value]) => value !== undefined && value !== "")
+      .map(([key, value]) => [key, String(value)])
+  ).toString();
+
   const res = await fetch(
-    `${BASE_URL}/api/admin/orders?page=${page}&limit=${limit}`
+    `${BASE_URL}/api/admin/orders?${query}`
   );
 
   if (!res.ok) {
@@ -28,6 +47,7 @@ export const fetchOrders = async (
 
   return res.json();
 };
+
 
 //fetch single order
 export const fetchOrderById = async (id: string): Promise<Order> => {
