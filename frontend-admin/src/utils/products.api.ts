@@ -29,6 +29,29 @@ export const fetchProducts = async (
   return res.json();
 };
 
+// export const fetchProducts = async (
+//   page = 1,
+//   limit = 10
+// ): Promise<PaginatedResponse<Product>> => {
+//   const token = localStorage.getItem("token");
+
+//   const res = await fetch(
+//     `${BASE_URL}/api/admin/products?page=${page}&limit=${limit}`,
+//     {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//     }
+//   );
+
+//   if (!res.ok) {
+//     throw new Error("Failed to fetch Products");
+//   }
+
+//   return res.json();
+// };
+
+
 //fetch single order
 export const fetchProductById = async (id: string): Promise<Product> => {
   const res = await axios.get(`${BASE_URL}/api/admin/product/${id}`);
