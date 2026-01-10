@@ -49,6 +49,32 @@ export const fetchOrders = async (
 };
 
 
+// export const fetchOrders = async (
+//   params: OrderQueryParams = {}
+// ): Promise<PaginatedResponse<Order>> => {
+//   const token = localStorage.getItem("token");
+
+//   const query = new URLSearchParams(
+//     Object.entries(params)
+//       .filter(([_, value]) => value !== undefined && value !== "")
+//       .map(([key, value]) => [key, String(value)])
+//   ).toString();
+
+//   const res = await fetch(`${BASE_URL}/api/admin/orders?${query}`, {
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   });
+
+//   if (!res.ok) {
+//     throw new Error("Failed to fetch orders");
+//   }
+
+//   return res.json();
+// };
+
+
+
 //fetch single order
 export const fetchOrderById = async (id: string): Promise<Order> => {
   const res = await axios.get(`${BASE_URL}/api/admin/orders/${id}`);

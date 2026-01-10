@@ -17,8 +17,22 @@ function Login() {
         }
       );
 
-      localStorage.setItem("token", res.data.token);
-      navigate("/products");
+      // localStorage.setItem("token", res.data.token);
+      // navigate("/products");
+
+      const { token, role } = res.data;
+
+      // Store token
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", role); 
+
+      // 🔀 Role-based redirect
+      if (role === "admin") {
+        window.location.href =
+          import.meta.env.VITE_ADMIN_URL + "/admin";
+      } else {
+        navigate("/");
+      }
     } catch (err: any) {
       console.error(err);
     }
