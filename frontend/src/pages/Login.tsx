@@ -17,22 +17,33 @@ function Login() {
         }
       );
 
-      // localStorage.setItem("token", res.data.token);
-      // navigate("/products");
+    //   // localStorage.setItem("token", res.data.token);
+    //   // navigate("/products");
 
-      const { token, role } = res.data;
+    //   const { token, role } = res.data;
 
-      // Store token
-      localStorage.setItem("token", token);
-      localStorage.setItem("role", role); 
+    //   // Store token
+    //   localStorage.setItem("token", token);
+    //   localStorage.setItem("role", role); 
 
-      // 🔀 Role-based redirect
-      if (role === "admin") {
-        window.location.href =
-          import.meta.env.VITE_ADMIN_URL + "/admin";
-      } else {
-        navigate("/");
-      }
+    //   // 🔀 Role-based redirect
+    //   if (role === "admin") {
+    //     window.location.href =
+    //       import.meta.env.VITE_ADMIN_URL + "/admin";
+    //   } else {
+    //     navigate("/");
+    //         // Force UI refresh
+    // // window.location.reload();
+
+
+    localStorage.setItem("token", res.data.token);
+
+    // Navigate first
+    navigate("/");
+
+    // Force UI refresh
+    window.location.reload();
+    //   }
     } catch (err: any) {
       console.error(err);
     }
