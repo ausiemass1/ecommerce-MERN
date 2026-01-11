@@ -3,6 +3,7 @@ import type { Order } from "../types/OrderTypes";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+// PaginatedResponse type
 export type PaginatedResponse<T> = {
   data: T[];
   pagination: {
@@ -13,9 +14,8 @@ export type PaginatedResponse<T> = {
   };
 };
 
-/**
- * Query params supported by admin order search & filters
- */
+// Query params supported by admin order search & filters
+
 export type OrderQueryParams = {
   page?: number;
   limit?: number;
@@ -23,59 +23,33 @@ export type OrderQueryParams = {
   email?: string;
   status?: string;
   startDate?: string; // ISO string
-  endDate?: string;   // ISO string
+  endDate?: string; // ISO string
 };
 
-//fetch all orders
+//fetch all orders with query params
 export const fetchOrders = async (
   params: OrderQueryParams = {}
 ): Promise<PaginatedResponse<Order>> => {
-  // Build query string safely
-  const query = new URLSearchParams(
-    Object.entries(params)
-      .filter(([_, value]) => value !== undefined && value !== "")
-      .map(([key, value]) => [key, String(value)])
-  ).toString();
-
-  const res = await fetch(
-    `${BASE_URL}/api/admin/orders?${query}`
+  const token = localStorage.getItem("token");
+  const cleanParams = Object.fromEntries(
+    Object.entries(params).filter(
+      ([_, value]) => value !== undefined && value !== ""
+    )
+  );
+  const res = await axios.get<PaginatedResponse<Order>>(
+    `${BASE_URL}/api/admin/orders`,
+    {
+      params: cleanParams, // ✅ axios builds query string safely
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
   );
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch orders");
-  }
-
-  return res.json();
+  return res.data;
 };
 
-
-// export const fetchOrders = async (
-//   params: OrderQueryParams = {}
-// ): Promise<PaginatedResponse<Order>> => {
-//   const token = localStorage.getItem("token");
-
-//   const query = new URLSearchParams(
-//     Object.entries(params)
-//       .filter(([_, value]) => value !== undefined && value !== "")
-//       .map(([key, value]) => [key, String(value)])
-//   ).toString();
-
-//   const res = await fetch(`${BASE_URL}/api/admin/orders?${query}`, {
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   });
-
-//   if (!res.ok) {
-//     throw new Error("Failed to fetch orders");
-//   }
-
-//   return res.json();
-// };
-
-
-
-//fetch single order
+// fetch single order
 export const fetchOrderById = async (id: string): Promise<Order> => {
   const res = await axios.get(`${BASE_URL}/api/admin/orders/${id}`);
   return res.data;

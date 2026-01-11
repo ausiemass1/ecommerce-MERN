@@ -16,4 +16,20 @@ body,
   flex: 1;
 }
 
-/* NAV BAR SECTION */
+/* DASHBOARD SECTION */
+
+
+.admin-sidebar {
+  height: calc(100vh - 64px);
+  border-right: 1px solid #ddd;
+}
+
+.admin-dashboard {
+  margin-top: 20px;
+}
+
+.collection-item.active {
+  background-color: #eceff1;
+  font-weight: bold;
+}
+
