@@ -9,10 +9,10 @@ const AdminLayout = () => {
 
   return (
     <>
-      <Navbar />
-      <main className="container">
+      <Navbar/>
+      {/* <main className="container"> */}
         <Outlet />
-      </main>
+      {/* </main> */}
     </>
   );
 };
