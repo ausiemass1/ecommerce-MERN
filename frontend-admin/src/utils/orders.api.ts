@@ -39,7 +39,7 @@ export const fetchOrders = async (
   const res = await axios.get<PaginatedResponse<Order>>(
     `${BASE_URL}/api/admin/orders`,
     {
-      params: cleanParams, // ✅ axios builds query string safely
+      params: cleanParams, 
       headers: {
         Authorization: `Bearer ${token}`,
       },
