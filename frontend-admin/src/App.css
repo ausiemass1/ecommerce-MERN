@@ -18,11 +18,6 @@ body,
 
 /* DASHBOARD SECTION */
 
-
-/* .admin-sidebar {
-  height: calc(100vh - 64px);
-  border-right: 1px solid #ddd;
-} */
 .admin-sidebar {
   position: sticky;
   top: 64px; /* navbar height */
@@ -31,16 +26,10 @@ body,
   border-right: 1px solid #e0e0e0;
 }
 
-
-/* .admin-dashboard {
-  margin-top: 20px;
-} */
-
 .collection-item.active {
   background-color: #eceff1;
   font-weight: bold;
 }
-
 
 .admin-body {
   margin-top: 20px; /* SAME as navbar height */
@@ -63,13 +52,10 @@ body,
   }
 }
 
-
 /* MOBILE */
-
 
 @media (max-width: 600px) {
   .admin-sidebar {
     display: none;
   }
 }
-
