@@ -55,6 +55,7 @@ const Orders: React.FC = () => {
           <br />
           <br />
           <br />
+          {/* FILTERS */}
           <input
             type="text"
             placeholder="Order ID"
@@ -97,6 +98,8 @@ const Orders: React.FC = () => {
             }
           />
         </div>
+
+        {/* ORDER TABLE */}
         <div className="col s12 m9">
           <h4 className="mb-3">Orders</h4>
 
