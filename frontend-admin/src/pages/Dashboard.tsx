@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import AdminSidebar from "../components/AdminSidebar";
+//import AdminSidebar from "../components/AdminSidebar";
 import StatsCard from "../components/StatsCard";
 import { fetchOrders } from "../utils/orders.api";
 import { fetchProducts } from "../utils/products.api";
@@ -54,11 +54,7 @@ const Dashboard = () => {
 
   return (
     <div className="row admin-dashboard">
-      {/* LEFT SIDEBAR */}
-      <div className="col s12 m3 l2">
-        <AdminSidebar />
-      </div>
-
+    
       {/* MAIN CONTENT */}
       <div className="col s12 m9 l10">
         {/* STATS */}

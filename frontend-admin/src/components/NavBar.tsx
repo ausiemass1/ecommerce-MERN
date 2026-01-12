@@ -1,4 +1,6 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import M from "materialize-css";
 
 const AdminNavbar = () => {
   const navigate = useNavigate();
@@ -8,31 +10,46 @@ const AdminNavbar = () => {
     navigate("/admin/login");
   };
 
+  useEffect(() => {
+    M.Sidenav.init(document.querySelectorAll(".sidenav"));
+  }, []);
+
   return (
     <nav className="blue-grey darken-3">
-      <div className="nav-wrapper ">
+      <div className="nav-wrapper container">
+
+        {/* MOBILE MENU ICON (must be OUTSIDE desktop-only ul) */}
+        <a
+          href="#!"
+          data-target="admin-sidenav"
+          className="sidenav-trigger hide-on-large-only"
+        >
+          <i className="material-icons">menu</i>
+        </a>
+
         {/* Logo */}
-        <Link to="/admin" className="brand-logo">
+        <Link to="/admin/dashboard" className="brand-logo">
           Admin
         </Link>
 
-        {/* Desktop links */}
+        {/* MOBILE SIDENAV */}
+        <ul id="admin-sidenav" className="sidenav">
+          <li><NavLink to="/admin/dashboard">Dashboard</NavLink></li>
+          <li><NavLink to="/admin/orders">Orders</NavLink></li>
+          <li><NavLink to="/admin/products">Products</NavLink></li>
+          <li><a href="#!" onClick={logout}>Logout</a></li>
+        </ul>
+
+        {/* DESKTOP NAV */}
         <ul className="right hide-on-med-and-down">
+          <li><NavLink to="/admin/dashboard">Dashboard</NavLink></li>
+          <li><NavLink to="/admin/products">Products</NavLink></li>
+          <li><NavLink to="/admin/orders">Orders</NavLink></li>
           <li>
-            <Link to="/admin">Dashboard</Link>
-          </li>
-          <li>
-            <Link to="/admin/products">Products</Link>
-          </li>
-          <li>
-            <Link to="/admin/orders">Orders</Link>
-          </li>
-          <li>
-            <a href="#!" onClick={logout}>
-              Logout
-            </a>
+            <a href="#!" onClick={logout}>Logout</a>
           </li>
         </ul>
+
       </div>
     </nav>
   );

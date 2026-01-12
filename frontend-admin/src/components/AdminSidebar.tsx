@@ -1,53 +1,32 @@
 
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const AdminSidebar = () => {
   return (
-    <div className="admin-sidebar">
+    <aside className="admin-sidebar">
       <ul className="collection">
         <li className="collection-item active">Dashboard</li>
 
         <li className="collection-item">
-          <Link to="/admin/products">Products</Link>
+          <NavLink to="/admin">Dashboard</NavLink>
         </li>
 
         <li className="collection-item">
-          <Link to="/admin/orders">Orders</Link>
+          <NavLink to="/admin/products">Products</NavLink>
         </li>
 
         <li className="collection-item">
-          <Link to="/admin/users">Users</Link>
-        </li>
-
-        <li className="collection-item divider" />
-
-        <li className="collection-item">
-          <strong>Filters</strong>
+          <NavLink to="/admin/orders">Orders</NavLink>
         </li>
 
         <li className="collection-item">
-          <label>
-            <input type="checkbox" />
-            <span>Active Orders</span>
-          </label>
+          <NavLink to="/admin/users">Users</NavLink>
         </li>
 
-        <li className="collection-item">
-          <label>
-            <input type="checkbox" />
-            <span>Out of Stock</span>
-          </label>
-        </li>
-
-        <li className="collection-item">
-          <label>
-            <input type="checkbox" />
-            <span>Admin Only</span>
-          </label>
-        </li>
       </ul>
-    </div>
+    </aside>
   );
 };
 
 export default AdminSidebar;
+

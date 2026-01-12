@@ -7,7 +7,7 @@ import AdminFooter from "./components/AdminFooter";
 import Orders from "./pages/Orders";
 import OrderDetailsPage from "./pages/OrderDetailsPage";
 import AdminAuthLayout from "./layouts/AdminAuthlayouts";
-import AdminLayout from "./layouts/AdminLyout";
+import AdminLayout from "./layouts/AdminLayout";
 
 const App = () => {
   return (

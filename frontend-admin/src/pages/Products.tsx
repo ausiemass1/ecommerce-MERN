@@ -21,7 +21,7 @@ const Products: React.FC = () => {
 
   const loadProducts = async () => {
     try {
-      const res = await fetchProducts(page, limit);
+      const res = await fetchProducts({page, limit});
       setProducts(res.data);
       setTotalPages(res.pagination.totalPages);
     } catch (err) {
@@ -90,7 +90,8 @@ const Products: React.FC = () => {
   };
 
   return (
-    <div className="container">
+    <div className="row admin-layout">
+    <div className="col s12 m9 l10">
       {/* ADD PRODUCT BUTTON */}
       <div className="row valign-wrapper">
         <h4 className="col s6">Products</h4>
@@ -144,6 +145,7 @@ const Products: React.FC = () => {
           </li>
         </ul>
       </div>
+    </div>
     </div>
   );
 };

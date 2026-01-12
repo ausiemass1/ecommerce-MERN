@@ -13,15 +13,18 @@ const AdminLayout = () => {
       <Navbar/>
      
      
-      <div className="row admin-layout">
-        {/* LEFT SIDEBAR – ALWAYS THE SAME */}
-        <div className="col s12 m3 l2">
-          <AdminSidebar />
-        </div>
+      {/* Shared container BELOW navbar */}
+      <div className="admin-body">
+        <div className="row admin-layout">
+          {/* SIDEBAR */}
+          <div className="col s12 m3 l2">
+            <AdminSidebar />
+          </div>
 
-        {/* PAGE CONTENT */}
-        <div className="col s12 m9 l10">
-          <Outlet />
+          {/* MAIN CONTENT */}
+          <div className="col s12 m9 l10">
+            <Outlet />
+          </div>
         </div>
       </div>
     </>
