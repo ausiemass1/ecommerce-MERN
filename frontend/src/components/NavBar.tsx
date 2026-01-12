@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import M from "materialize-css";
+import logo from "../assets/logo.png";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -101,9 +102,9 @@ function Navbar() {
               <i className="material-icons">menu</i>
             </a>
 
-            <Link to="/" className="brand-logo">
-              Logo
-            </Link>
+            <Link to="/admin/dashboard" className="brand-logo">
+        <img src={logo} alt="Admin Logo" className="nav-logo" />
+        </Link>
 
             <ul className="right hide-on-med-and-down">
               <li key="home">

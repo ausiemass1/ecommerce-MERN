@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import logo from "../assets/logo.png";
 import M from "materialize-css";
 
 const AdminNavbar = () => {
@@ -22,14 +23,14 @@ const AdminNavbar = () => {
         <a
           href="#!"
           data-target="admin-sidenav"
-          className="sidenav-trigger hide-on-large-only"
+          className="sidenav-trigger righthide-on-large-only"
         >
           <i className="material-icons">menu</i>
         </a>
-
+  
         {/* Logo */}
         <Link to="/admin/dashboard" className="brand-logo">
-          Admin
+        <img src={logo} alt="Admin Logo" className="nav-logo" />
         </Link>
 
         {/* MOBILE SIDENAV */}

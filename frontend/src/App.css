@@ -14,6 +14,21 @@ body,
 .main-content {
   flex: 1;
 }
+
+/* LOGO */
+
+.nav-logo {
+  height: 46px;
+  margin-top: 9px;
+  display: block;
+}
+
+.brand-logo {
+  display: flex !important;
+  align-items: center;
+}
+
+
 /* NAV BAR SECTION */
 
 
