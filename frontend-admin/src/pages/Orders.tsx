@@ -8,7 +8,8 @@ const Orders: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [filters, setFilters] = useState({
+  // const [filters, setFilters] = useState({
+  const [filters] = useState({
     orderId: "",
     email: "",
     status: "",
