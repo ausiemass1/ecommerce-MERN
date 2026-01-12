@@ -13,20 +13,39 @@ export type PaginatedResponse<T> = {
   };
 };
 
+export type ProductQueryParams = {
+  page?: number;
+  limit?: number;
+  name?: string;
+  category?: string;
+  minPrice?: number;
+  maxPrice?: number;
+};
+
 //fetch all orders
 export const fetchProducts = async (
-  page = 1,
-  limit = 10
+  params: ProductQueryParams = {},
 ): Promise<PaginatedResponse<Product>> => {
-  const res = await fetch(
-    `${BASE_URL}/api/admin/products?page=${page}&limit=${limit}`
+  const token = localStorage.getItem("token");
+  const cleanParams = Object.fromEntries(
+    Object.entries(params).filter(
+      ([_, value]) => value !== undefined && value !== ""
+    )
+  );
+  const res = await axios.get(
+    `${BASE_URL}/api/admin/products`,
+    {
+      params: cleanParams,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
   );
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch Products");
-  }
+ 
 
-  return res.json();
+  return res.data;
 };
 
 // export const fetchProducts = async (
