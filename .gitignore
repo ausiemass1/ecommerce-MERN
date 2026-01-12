@@ -1,3 +1,18 @@
-.DS_Store
+# Node
 node_modules/
-.env
+
+# Env files
+.env*
+!.env.example
+
+# Build outputs
+dist/
+build/
+
+# Logs
+*.log
+
+# OS / Editor
+.DS_Store
+.vscode/
+.idea/
