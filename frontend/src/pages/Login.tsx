@@ -11,39 +11,22 @@ function Login() {
     e.preventDefault();
 
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, {
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/auth/login`,
+        {
           email,
           password,
         }
       );
 
-    //   // localStorage.setItem("token", res.data.token);
-    //   // navigate("/products");
+      localStorage.setItem("token", res.data.token);
 
-    //   const { token, role } = res.data;
+      // Navigate first
+      navigate("/");
 
-    //   // Store token
-    //   localStorage.setItem("token", token);
-    //   localStorage.setItem("role", role); 
-
-    //   // 🔀 Role-based redirect
-    //   if (role === "admin") {
-    //     window.location.href =
-    //       import.meta.env.VITE_ADMIN_URL + "/admin";
-    //   } else {
-    //     navigate("/");
-    //         // Force UI refresh
-    // // window.location.reload();
-
-
-    localStorage.setItem("token", res.data.token);
-
-    // Navigate first
-    navigate("/");
-
-    // Force UI refresh
-    window.location.reload();
-    //   }
+      // Force UI refresh
+      window.location.reload();
+      //   }
     } catch (err: any) {
       console.error(err);
     }
