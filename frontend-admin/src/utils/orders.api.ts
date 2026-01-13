@@ -4,6 +4,7 @@ import type { PaginatedResponse } from "../types/api"; // import the PaginatedRe
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+
 // Query params supported by admin order search & filters
 export type OrderQueryParams = {
   page?: number;
