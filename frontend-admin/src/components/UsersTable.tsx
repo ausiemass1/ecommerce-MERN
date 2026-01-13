@@ -4,7 +4,7 @@ import type { User } from "../types/UserTypes";
 interface Props {
     users: User[];
     onEdit: (user: User) => void;
-    onDelete: (user: User) => void;
+    onDelete: (id: string) => void;
 }
 
 const UsersTable: React.FC<Props> = ({ users, onEdit, onDelete }) => {
@@ -31,7 +31,7 @@ const UsersTable: React.FC<Props> = ({ users, onEdit, onDelete }) => {
                         <td>{user.role}</td>
                         <td>
                             <button onClick={() => onEdit(user)}>Edit</button>
-                            <button onClick={() => onDelete(user)}>Delete</button>
+                            <button onClick={() => onDelete(user._id)}>Delete</button>
                         </td>
                     </tr>
                 ))}

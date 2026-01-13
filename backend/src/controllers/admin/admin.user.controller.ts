@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import User from "../../models/user";
 import { paginate } from "../../utils/paginate";
+
+// LIST ALL USERS
 export const getAllUsers = async (req: Request, res: Response) => {
     try {
      const page = Number(req.query.page) || 1;
@@ -15,3 +17,55 @@ export const getAllUsers = async (req: Request, res: Response) => {
       res.status(500).json({ message: "Failed to fetch users" });
     }
 };
+
+//ADD USER
+export const addUser = async (req: Request, res: Response) => {
+    try {
+      const { name, email, age } = req.body;
+      const user = new User({ name, email, age });
+      await user.save();
+      res.status(201).json({ message: "User added successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to add user" });
+    }
+  };
+
+//EDIT USER
+export const updateUser = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const { name, email, age } = req.body;
+      const user = await User.findById(id);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      user.name = name;
+      user.email = email;
+      user.age = age;
+      await user.save();
+      res.json(user);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update user" });
+    }
+  };
+
+//DELETE USER
+export const deleteUser = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+  
+      const user = await User.findByIdAndDelete(id);
+  
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      return res.status(200).json({
+        message: "User deleted successfully",
+        userId: id,
+      });
+    } catch (error) {
+      console.error("Delete user error:", error);
+      return res.status(500).json({ message: "Failed to delete user" });
+    }
+  };
