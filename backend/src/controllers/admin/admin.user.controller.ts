@@ -21,8 +21,8 @@ export const getAllUsers = async (req: Request, res: Response) => {
 //ADD USER
 export const addUser = async (req: Request, res: Response) => {
     try {
-      const { name, email, age } = req.body;
-      const user = new User({ name, email, age });
+      const { name, email, role } = req.body;
+      const user = new User({ name, email, role });
       await user.save();
       res.status(201).json({ message: "User added successfully" });
     } catch (error) {
@@ -34,14 +34,14 @@ export const addUser = async (req: Request, res: Response) => {
 export const updateUser = async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      const { name, email, age } = req.body;
+      const { name, email, role } = req.body;
       const user = await User.findById(id);
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
       user.name = name;
       user.email = email;
-      user.age = age;
+      user.role = role;
       await user.save();
       res.json(user);
     } catch (error) {

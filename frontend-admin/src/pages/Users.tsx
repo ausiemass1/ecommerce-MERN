@@ -33,33 +33,37 @@ const Users: React.FC = () => {
   useEffect(() => {
     loadUsers();
   }, [page]);
-
+// HANDLE ADD AND EDIT  USER 
   const handleSaveUser = async (user: UserFormData) => {
-    const formData = new FormData();
-    formData.append("name", user.name);
-    formData.append("email", user.email);
-    formData.append("role", user.role);
-    const id = user._id;
-    if (!id) {
-      // ADD NEW USER
-      try {
-        await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/admin/users`, user);
-        await loadUsers(); // refresh table
-      } catch (err) {
-        console.error("Add user failed:", err);
-        alert("Failed to add user");
-      }
-      return;
-    }
+    const payload = {
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    };
+  
     try {
-      await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/admin/users/${user._id}`, user);
-      await loadUsers(); // refresh table
+      if (user._id) {
+        // UPDATE
+        await axios.put(
+          `${import.meta.env.VITE_API_BASE_URL}/api/admin/users/${user._id}`,
+          payload
+        );
+      } else {
+        // CREATE
+        await axios.post(
+          `${import.meta.env.VITE_API_BASE_URL}/api/admin/users`,
+          payload
+        );
+      }
+  
+      setSelectedUser(null);
+      await loadUsers();
     } catch (err) {
       console.error("Save failed:", err);
       alert("Failed to save user");
     }
   };
-
+  
   //    DELETE USER
 
   const handleDelete = async (id: string) => {
@@ -82,10 +86,10 @@ const Users: React.FC = () => {
         <h4 className="col s6">Products</h4>
 
         <button
-          className="btn green col s6 right"
+          className="btn green col s4 right"
           onClick={() => setSelectedUser(EMPTY_USER)}
         >
-          + Add Product
+          + Add user
         </button>
       </div>
       <h1>Users</h1>
