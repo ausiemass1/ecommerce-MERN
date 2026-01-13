@@ -15,7 +15,6 @@ export type PaginatedResponse<T> = {
 };
 
 // Query params supported by admin order search & filters
-
 export type OrderQueryParams = {
   page?: number;
   limit?: number;
