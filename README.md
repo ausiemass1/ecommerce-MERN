@@ -108,7 +108,7 @@ Clone the project and navigate into the root directory:
 
 ## Backend Setup
 
-1. Navigate to the backend folder:
+1. Navigate to the backend folder and install dependancies:
    ````
    cd backend
    npm install
@@ -151,7 +151,7 @@ Clone the project and navigate into the root directory:
 
     `npm run dev`
 
-4. The backend app will run on http://localhost:5000
+4. The backend app will run on http://localhost:4000
 
 
 ## Frontend Setup (User)
@@ -168,7 +168,7 @@ Clone the project and navigate into the root directory:
 
 3.  Create a .env file:
 
-VITE_API_BASE_URL=http://localhost:4000
+    VITE_API_BASE_URL=http://localhost:4000
 
 
 4.  Start the development server:
@@ -176,7 +176,7 @@ VITE_API_BASE_URL=http://localhost:4000
     `npm run dev`
 
 
-User application runs at: http://localhost:5173/login
+    User application runs at: http://localhost:5173/login
 
 
 ## Frontend Setup (Admin)
@@ -193,7 +193,7 @@ User application runs at: http://localhost:5173/login
 
 3.  Create a .env file:
 
-    `VITE_API_BASE_URL=http://localhost:5000`
+    `VITE_API_BASE_URL=http://localhost:4000`
 
 
 4.  Start the development server:
@@ -207,9 +207,9 @@ User application runs at: http://localhost:5173/login
 
    # Notes
 
-    - Ensure MongoDB is running before starting the backend.
-    - Demo credentials are for testing purposes only.
-    - The project showcases real-world MERN functionality, including authentication, payments, pagination, and admin management.
+- Ensure MongoDB is running before starting the backend.
+- Demo credentials are for testing purposes only.
+- The project showcases real-world MERN functionality, including authentication, payments, pagination, and admin management.
 
 
 # 👨‍💻 Author
