@@ -9,6 +9,7 @@ import checkoutRoutes from "./routes/checkout.routes";
 import adminProductRoutes from "./routes/admin/admin.product.routes";
 import adminOrderRoutes from "./routes/admin/admin.order.routes";
 import webhookRoutes from "./routes/webhook.routes";
+import adminUserRoutes from "./routes/admin/admin.user.routes";
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use("/api/cart", cartRoutes);
 app.use("/api", checkoutRoutes);
 app.use("/api/admin/products", adminProductRoutes);
 app.use("/api/admin/orders", adminOrderRoutes);
+app.use("/api/admin/users", adminUserRoutes);
 
 /* ---------- STATIC FILES ---------- */
 const rootPath = path.join(__dirname, "..");
