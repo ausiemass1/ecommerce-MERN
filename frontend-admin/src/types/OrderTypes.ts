@@ -1,20 +1,3 @@
-
-// export interface OrderItem {
-//     name: string;
-//     quantity: number;
-//     price: number;
-//   }
-  
-//   export interface Order {
-//     _id: string;
-//     customerName: string;
-//     customerEmail: string;
-//     items: OrderItem[];
-//     amount_total: number;
-//     payment_status: string;
-//     createdAt: string;
-//   }
-
 export interface OrderItem {
   name: string;
   quantity: number;

@@ -1,18 +1,8 @@
 import axios from "axios";
 import type { Order } from "../types/OrderTypes";
+import type { PaginatedResponse } from "../types/api"; // import the PaginatedResponse type
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
-// PaginatedResponse type
-export type PaginatedResponse<T> = {
-  data: T[];
-  pagination: {
-    totalItems: number;
-    totalPages: number;
-    currentPage: number;
-    limit: number;
-  };
-};
 
 // Query params supported by admin order search & filters
 export type OrderQueryParams = {

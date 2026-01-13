@@ -1,3 +1,7 @@
+import React from 'react';
+import { fetchAllUsers } from '../utils/users.api';
+
+
 const Users = () => {
     return (
         <div>
