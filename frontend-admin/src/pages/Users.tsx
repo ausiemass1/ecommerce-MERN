@@ -83,16 +83,16 @@ const Users: React.FC = () => {
     <div className="col s12 m9 l10">
       {/* ADD PRODUCT BUTTON */}
       <div className="row valign-wrapper">
-        <h4 className="col s6">Products</h4>
+        <h4 className="col s6">Users</h4>
 
-        <button
+        {/* <button
           className="btn green col s4 right"
           onClick={() => setSelectedUser(EMPTY_USER)}
         >
           + Add user
-        </button>
+        </button> */}
       </div>
-      <h1>Users</h1>
+      
       {/* USERS TABLE */}
       <UsersTable
         users={users}
