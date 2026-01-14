@@ -13,11 +13,11 @@ const Users: React.FC = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [selectedUser, setSelectedUser] = useState<UserFormData | null>(null);
   const limit = 10;
-  const EMPTY_USER: UserFormData = {
-    name: "",
-    email: "",
-    role: "user",   
-  }
+  // const EMPTY_USER: UserFormData = {
+  //   name: "",
+  //   email: "",
+  //   role: "user",   
+  // }
 
   const loadUsers = async () => {
     try {
