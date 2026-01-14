@@ -36,6 +36,7 @@ const AdminNavbar = () => {
         {/* MOBILE SIDENAV */}
         <ul id="admin-sidenav" className="sidenav">
           <li><NavLink to="/admin/dashboard">Dashboard</NavLink></li>
+          <li><NavLink to="/admin/users">Users</NavLink></li>
           <li><NavLink to="/admin/orders">Orders</NavLink></li>
           <li><NavLink to="/admin/products">Products</NavLink></li>
           <li><a href="#!" onClick={logout}>Logout</a></li>
@@ -44,6 +45,7 @@ const AdminNavbar = () => {
         {/* DESKTOP NAV */}
         <ul className="right hide-on-med-and-down">
           <li><NavLink to="/admin/dashboard">Dashboard</NavLink></li>
+          <li><NavLink to="/admin/users">Users</NavLink></li>
           <li><NavLink to="/admin/products">Products</NavLink></li>
           <li><NavLink to="/admin/orders">Orders</NavLink></li>
           <li>
