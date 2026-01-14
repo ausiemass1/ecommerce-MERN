@@ -6,7 +6,7 @@ interface Props {
   onDelete: (id: string) => void;
 }
 
-const UsersTable: React.FC<Props> = ({ users, onEdit, onDelete }) => {
+const UsersTable = ({ users, onEdit, onDelete }: Props) => {
   if (!Array.isArray(users)) {
     return <p className="red-text">Users data is invalid</p>;
   }

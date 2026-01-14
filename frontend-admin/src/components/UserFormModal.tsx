@@ -15,14 +15,9 @@ const emptyForm: UserFormData = {
   role: "user",
 };
 
-const UserFormModal: React.FC<Props> = ({
-  user,
-  onSave,
-  onDelete,
-  onClose,
-}) => {
+const UserFormModal = ({ user, onSave, onDelete, onClose }: Props) => {
+  
   const [form, setForm] = useState<UserFormData>(emptyForm);
-
   const modalRef = useRef<HTMLDivElement | null>(null);
   const instanceRef = useRef<M.Modal | null>(null);
 
@@ -33,7 +28,7 @@ const UserFormModal: React.FC<Props> = ({
       instanceRef.current = M.Modal.init(modalRef.current, {
         onCloseEnd: () => {
           setForm(emptyForm); // reset safely
-          onClose();          // tell parent
+          onClose(); // tell parent
         },
       });
     }
@@ -62,9 +57,7 @@ const UserFormModal: React.FC<Props> = ({
         <div className="input-field">
           <input
             value={form.name}
-            onChange={(e) =>
-              setForm({ ...form, name: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
           />
           <label className="active">Name</label>
         </div>
@@ -73,9 +66,7 @@ const UserFormModal: React.FC<Props> = ({
           <input
             type="email"
             value={form.email}
-            onChange={(e) =>
-              setForm({ ...form, email: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
           />
           <label className="active">Email</label>
         </div>

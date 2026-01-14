@@ -13,11 +13,11 @@ const emptyForm: ProductFormData = {
   price: 0,
 };
 
-const ProductFormModal: React.FC<Props> = ({
+const ProductFormModal = ({
   product,
   onSave,
   onClose,
-}) => {
+}: Props) => {
   const [form, setForm] = useState<ProductFormData>(emptyForm);
   const modalRef = useRef<HTMLDivElement | null>(null);
   const instanceRef = useRef<M.Modal | null>(null);

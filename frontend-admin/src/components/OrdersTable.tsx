@@ -5,7 +5,7 @@ interface Props {
   orders: Order[];
 }
 
-const OrdersTable: React.FC<Props> = ({ orders }) => {
+const OrdersTable = ({ orders }: Props) => {
   return (
     <table className="highlight responsive-table">
       <thead>
