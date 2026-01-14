@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import M from "materialize-css";
 import type { UserFormData } from "../types/UserFormData";
 
@@ -9,36 +9,56 @@ interface Props {
   onClose: () => void;
 }
 
+const emptyForm: UserFormData = {
+  name: "",
+  email: "",
+  role: "user",
+};
+
 const UserFormModal: React.FC<Props> = ({
   user,
   onSave,
   onDelete,
   onClose,
 }) => {
-  const [form, setForm] = useState<UserFormData>({
-    name: "",
-    email: "",
-    role: "user",
-  });
+  const [form, setForm] = useState<UserFormData>(emptyForm);
+
+  const modalRef = useRef<HTMLDivElement | null>(null);
+  const instanceRef = useRef<M.Modal | null>(null);
 
   useEffect(() => {
-    const elem = document.getElementById("user-modal");
-    const instance = M.Modal.init(elem!);
+    if (!modalRef.current) return;
+
+    if (!instanceRef.current) {
+      instanceRef.current = M.Modal.init(modalRef.current, {
+        onCloseEnd: () => {
+          setForm(emptyForm); // reset safely
+          onClose();          // tell parent
+        },
+      });
+    }
 
     if (user) {
-      setForm(user);
-      instance.open();
-    }
-  }, [user]);
+      setForm({
+        _id: user._id,
+        name: user.name ?? "",
+        email: user.email ?? "",
+        role: user.role ?? "user",
+      });
 
-  if (!user) return null;
+      instanceRef.current.open();
+    }
+  }, [user, onClose]);
+
+  const closeModal = () => {
+    instanceRef.current?.close();
+  };
 
   return (
-    <div id="user-modal" className="modal">
+    <div ref={modalRef} id="user-modal" className="modal">
       <div className="modal-content">
         <h5>{form._id ? "Edit User" : "Add User"}</h5>
 
-        {/* NAME */}
         <div className="input-field">
           <input
             value={form.name}
@@ -49,7 +69,6 @@ const UserFormModal: React.FC<Props> = ({
           <label className="active">Name</label>
         </div>
 
-        {/* EMAIL */}
         <div className="input-field">
           <input
             type="email"
@@ -61,7 +80,6 @@ const UserFormModal: React.FC<Props> = ({
           <label className="active">Email</label>
         </div>
 
-        {/* ROLE */}
         <div className="input-field">
           <select
             className="browser-default"
@@ -76,26 +94,33 @@ const UserFormModal: React.FC<Props> = ({
             <option value="user">User</option>
             <option value="admin">Admin</option>
           </select>
-          <label className="active">Role</label>
         </div>
       </div>
 
       <div className="modal-footer">
-        {/* DELETE (only when editing) */}
         {form._id && (
           <button
             className="btn-flat red-text left"
-            onClick={() => onDelete(form._id!)}
+            onClick={() => {
+              onDelete(form._id!);
+              closeModal();
+            }}
           >
             Delete
           </button>
         )}
 
-        <button className="btn-flat" onClick={onClose}>
+        <button className="btn-flat" onClick={closeModal}>
           Cancel
         </button>
 
-        <button className="btn green" onClick={() => onSave(form)}>
+        <button
+          className="btn green"
+          onClick={() => {
+            onSave(form);
+            closeModal();
+          }}
+        >
           Save
         </button>
       </div>
