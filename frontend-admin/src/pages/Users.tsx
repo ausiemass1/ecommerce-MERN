@@ -13,11 +13,7 @@ const Users: React.FC = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [selectedUser, setSelectedUser] = useState<UserFormData | null>(null);
   const limit = 10;
-  // const EMPTY_USER: UserFormData = {
-  //   name: "",
-  //   email: "",
-  //   role: "user",   
-  // }
+ 
 
   const loadUsers = async () => {
     try {
@@ -33,6 +29,7 @@ const Users: React.FC = () => {
   useEffect(() => {
     loadUsers();
   }, [page]);
+
 // HANDLE ADD AND EDIT  USER 
   const handleSaveUser = async (user: UserFormData) => {
     const payload = {
@@ -79,6 +76,7 @@ const Users: React.FC = () => {
   };
 
   return (
+    
     <div className="row admin-layout">
     <div className="col s12 m9 l10">
       {/* ADD PRODUCT BUTTON */}
