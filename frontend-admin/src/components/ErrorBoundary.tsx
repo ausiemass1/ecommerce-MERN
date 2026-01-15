@@ -24,7 +24,7 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   render() {
-    if (this.state.hasError) {
+    if (this.state.hasError) { 
       return (
         <div className="container center-align">
           <h4>Something went wrong 😢</h4>
