@@ -45,4 +45,15 @@ describe("fetchProducts", () => {
 
     expect(response).toEqual(mockResponse.data);
   });
+
+  test("throws an error when API call fails", async () => {
+    // 1. Fake the token
+    vi.spyOn(window.localStorage, "getItem").mockReturnValue("fake-token");
+  
+    // 2. Make axios.get FAIL
+    (axios.get as any).mockRejectedValue(new Error("API Error"));
+  
+    // 3. Call the function and expect it to throw
+    await expect(fetchProducts({ page: 1 })).rejects.toThrow("API Error");
+  });
 });
