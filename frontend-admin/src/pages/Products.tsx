@@ -94,7 +94,7 @@ const Products = () => {
     <div className="col s12 m9 l10">
       {/* ADD PRODUCT BUTTON */}
       <div className="row valign-wrapper">
-        <h4 className="col s6">Products</h4>
+        <p className="col s6">Products</p>
 
         <button
           className="btn green col s6 right"
