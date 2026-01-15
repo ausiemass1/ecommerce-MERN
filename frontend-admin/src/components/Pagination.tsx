@@ -4,11 +4,11 @@ interface Props {
     onPageChange: (page: number) => void;
   }
   
-  const Pagination: React.FC<Props> = ({
+  const Pagination = ({
     currentPage,
     totalPages,
     onPageChange,
-  }) => {
+  }: Props) => {
     if (totalPages <= 1) return null;
   
     return (

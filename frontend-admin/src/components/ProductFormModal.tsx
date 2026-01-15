@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import M from "materialize-css";
 import type { ProductFormData } from "../types/ProductFormData";
 
@@ -8,34 +8,67 @@ interface Props {
   onClose: () => void;
 }
 
-const ProductFormModal: React.FC<Props> = ({ product, onSave, onClose }) => {
-  const [form, setForm] = useState<ProductFormData>({
-    name: "",
-    price: 0,
-    description: "",
-  });
+const emptyForm: ProductFormData = {
+  name: "",
+  price: 0,
+};
+
+const ProductFormModal = ({
+  product,
+  onSave,
+  onClose,
+}: Props) => {
+  const [form, setForm] = useState<ProductFormData>(emptyForm);
+  const modalRef = useRef<HTMLDivElement | null>(null);
+  const instanceRef = useRef<M.Modal | null>(null);
 
   useEffect(() => {
-    const elem = document.getElementById("product-modal");
-    M.Modal.init(elem!);
+    if (!modalRef.current) return;
+
+    if (!instanceRef.current) {
+      instanceRef.current = M.Modal.init(modalRef.current, {
+        onCloseEnd: () => {
+          setForm(emptyForm);
+          onClose();
+        },
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!instanceRef.current) return;
 
     if (product) {
-      setForm(product);
-      M.Modal.getInstance(elem!)?.open();
+      setForm({
+        _id: product._id,
+        name: product.name ?? "",
+        description: product.description ?? "",
+        price: product.price ?? 0,
+        imageFile: product.imageFile,
+      });
+      instanceRef.current.open();
+    } else {
+      instanceRef.current.close();
     }
   }, [product]);
 
-  if (!product) return null;
+  const closeModal = () => {
+    instanceRef.current?.close();
+  };
+
+
 
   return (
-    <div id="product-modal" className="modal">
+    <div ref={modalRef} id="product-modal" className="modal">
       <div className="modal-content">
         <h5>{form._id ? "Edit Product" : "Add Product"}</h5>
 
         <div className="input-field">
           <input
             value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            onChange={(e) =>
+              setForm({ ...form, name: e.target.value })
+            }
           />
           <label className="active">Name</label>
         </div>
@@ -43,7 +76,7 @@ const ProductFormModal: React.FC<Props> = ({ product, onSave, onClose }) => {
         <div className="input-field">
           <textarea
             className="materialize-textarea"
-            value={form.description}
+            value={form.description ?? ""}
             onChange={(e) =>
               setForm({ ...form, description: e.target.value })
             }
@@ -54,16 +87,18 @@ const ProductFormModal: React.FC<Props> = ({ product, onSave, onClose }) => {
         <div className="input-field">
           <input
             type="number"
-            step="0.01" 
+            step="0.01"
             value={form.price}
             onChange={(e) =>
-              setForm({ ...form, price: Number(e.target.value) })
+              setForm({
+                ...form,
+                price: Number(e.target.value),
+              })
             }
           />
           <label className="active">Price</label>
         </div>
 
-        {/* ✅ Image upload */}
         <div className="file-field input-field">
           <div className="btn">
             <span>Image</span>
@@ -79,16 +114,26 @@ const ProductFormModal: React.FC<Props> = ({ product, onSave, onClose }) => {
             />
           </div>
           <div className="file-path-wrapper">
-            <input className="file-path validate" placeholder="Upload product image" />
+            <input
+              className="file-path validate"
+              placeholder="Upload product image"
+            />
           </div>
         </div>
       </div>
 
       <div className="modal-footer">
-        <button className="btn-flat" onClick={onClose}>
+        <button className="btn-flat" onClick={closeModal}>
           Cancel
         </button>
-        <button className="btn green" onClick={() => onSave(form)}>
+
+        <button
+          className="btn green"
+          onClick={() => {
+            onSave(form);
+            closeModal();
+          }}
+        >
           Save
         </button>
       </div>
