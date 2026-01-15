@@ -6,7 +6,7 @@ import ProductFormModal from "../components/ProductFormModal";
 import type { ProductFormData } from "../types/ProductFormData";
 import { fetchProducts } from "../utils/products.api";
 
-const Products: React.FC = () => {
+const Products = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);

@@ -7,7 +7,7 @@ import UserFormModal from "../components/UserFormModal";
 import type { UserFormData } from "../types/UserFormData";
 
 
-const Users: React.FC = () => {
+const Users = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -15,6 +15,8 @@ const Users: React.FC = () => {
   const limit = 10;
  
 
+
+  // FETCH ALL USERS  FROM BACKEND
   const loadUsers = async () => {
     try {
       const res = await fetchAllUsers({ page, limit });
@@ -25,7 +27,7 @@ const Users: React.FC = () => {
       setUsers([]);
     }
   };
-
+// LOAD USERS FROM BACKEND WHEN PAGE CHANGES (RERENDER)
   useEffect(() => {
     loadUsers();
   }, [page]);
@@ -62,7 +64,6 @@ const Users: React.FC = () => {
   };
   
   //    DELETE USER
-
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this user?")) return;
 
@@ -75,6 +76,7 @@ const Users: React.FC = () => {
     }
   };
 
+  // THIS IS THE ACTUAL PAGE SEEN BY THE USER
   return (
     
     <div className="row admin-layout">
