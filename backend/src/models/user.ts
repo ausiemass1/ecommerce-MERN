@@ -38,7 +38,7 @@ const userSchema = new Schema<IUser>(
     name: String,
     age: Number,
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    password: { type: String, required: true, select: false  },
     googleId: String,
     githubId: String,
     role: {
