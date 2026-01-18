@@ -28,7 +28,7 @@ function Home() {
         <div className="col s12 m9">
           <div className="row">
             {products.map(product => (
-              <ProductCard
+              <ProductCard key={product._id}
                 product={product}
               />
             ))}
