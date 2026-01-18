@@ -25,7 +25,7 @@ const AdminLogin = () => {
         throw new Error("You are not authorized to access the admin panel");
       }
 
-      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("token", res.data.accessToken);
       navigate("/admin/dashboard");
     } catch (err: any) {
       setError(
