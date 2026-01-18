@@ -8,10 +8,10 @@ export const registerUser = async (req: Request, res: Response) => {
   try {
     const { name, age, email, password } = req.body;
 
-    // 1️⃣ Hash the password
+    // 1️ Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // 2️⃣ Save user
+    // 2️ Save user
     const user = new User({
       name,
       age,
@@ -46,7 +46,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
     // 3. Create token
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET!, {
-      expiresIn: "7d",
+      expiresIn: "1h",
     });
 
   
