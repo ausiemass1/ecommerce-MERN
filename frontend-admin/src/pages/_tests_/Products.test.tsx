@@ -10,5 +10,6 @@ describe('Products Page', () => {
 //     render(<Products />);
 //     expect(screen.getByText(/no products/i)).toBeInTheDocument();
 //   });
+
   
 });
