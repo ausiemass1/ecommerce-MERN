@@ -6,6 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createCheckoutSession = void 0;
 const stripe_1 = __importDefault(require("../config/stripe"));
 const redis_1 = __importDefault(require("../config/redis"));
+/* ---------------------------------------------
+   CREATE CHECKOUT SESSION
+---------------------------------------------- */
 const createCheckoutSession = async (req, res) => {
     try {
         const userId = req.user.id;
@@ -14,11 +17,12 @@ const createCheckoutSession = async (req, res) => {
         if (!cart || cart.items.length === 0) {
             return res.status(400).json({ message: "Cart is empty" });
         }
-        const lineItems = cart.items.map(item => ({
+        const lineItems = cart.items.map((item) => ({
             price_data: {
-                currency: "usd",
+                currency: "nzd",
                 product_data: {
                     name: item.name,
+                    images: item.image ? [item.image] : [],
                 },
                 unit_amount: Math.round(item.price * 100),
             },
@@ -27,8 +31,16 @@ const createCheckoutSession = async (req, res) => {
         const session = await stripe_1.default.checkout.sessions.create({
             mode: "payment",
             line_items: lineItems,
-            success_url: "http://localhost:5173/",
-            cancel_url: "http://localhost:5173/cart",
+            shipping_address_collection: {
+                allowed_countries: ["NZ", "US"],
+            },
+            // success_url: `http://localhost:5173/`,
+            // cancel_url: `http://localhost:5173/cart`,
+            success_url: `${process.env.CLIENT_URL}/`,
+            cancel_url: `${process.env.CLIENT_URL}/cart`,
+            metadata: {
+                userId,
+            },
         });
         res.json({ url: session.url });
     }
