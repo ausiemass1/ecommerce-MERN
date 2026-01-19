@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../utils/api";
+import axios from "axios";
 
 interface CartItem {
   productId: string;
@@ -47,8 +48,16 @@ const Cart = () => {
       const res = await api.post("/checkout");
       console.log("Checkout response:", res.data);
       window.location.href = res.data.url;
-    } catch (err: any) {
-      console.error("Checkout error:", err.response?.data || err);
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        console.error(
+          "Checkout error:",
+          err.response?.data || err.message
+        );
+      } else {
+        console.error("Checkout error:", err);
+      }
+  
       alert("Checkout failed");
     }
   };
