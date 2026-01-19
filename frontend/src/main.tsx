@@ -3,7 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import "materialize-css/dist/css/materialize.min.css";
 import "./App.css";
 import App from "./App.tsx";
-import { UserAuthProvider } from "./context/UserAuthContext.tsx";
+import { UserAuthProvider } from "./context/UserAuthProvider.tsx";
 // import React from "react";
 import ErrorBoundary from "./components/ErrorBoundary.tsx";
 
