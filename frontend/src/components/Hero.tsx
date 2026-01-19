@@ -24,6 +24,8 @@ const Hero = () => {
 
   return (
     <div className="hero">
+      {/* TODO: Replace with actual images from client */}
+      {/* TODO: Refactor into separate component */}
       <div ref={carouselRef} className="carousel carousel-slider hero-carousel">
         {/* SLIDE 1 */}
         <div
