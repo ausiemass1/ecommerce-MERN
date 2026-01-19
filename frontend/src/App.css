@@ -78,13 +78,21 @@ body,
 
 /* HERO SECTION */
 
+/* HERO SECTION */
+
 .hero {
-  min-height: 20vh;
-  max-height: 380px;
-  background-image: url("https://images.unsplash.com/photo-1550547660-d9450f859349");
+  height: 380px;
+  position: relative;
+}
+
+.hero-carousel {
+  height: 100%;
+}
+
+.hero-slide {
+  height: 380px;
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
   position: relative;
 }
 
@@ -107,6 +115,7 @@ body,
   font-size: 1.3rem;
   margin-bottom: 20px;
 }
+
 
 /* PRODUCT CARD */
 
