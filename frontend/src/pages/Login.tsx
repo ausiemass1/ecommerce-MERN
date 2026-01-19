@@ -27,8 +27,12 @@ function Login() {
       // Force UI refresh
       window.location.reload();
       //   }
-    } catch (err: any) {
-      console.error(err);
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        console.error(err.response?.data || err.message);
+      } else {
+        console.error(err);
+      }
     }
   };
 
