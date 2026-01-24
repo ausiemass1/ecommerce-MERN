@@ -123,7 +123,7 @@ Clone the project and navigate into the root directory:
     PORT=4000
 
     # session secret
-    JWT_SECRET=
+    JWT_ACCESS_SECRET=
     CLIENT_URL=
 
     # Mongo Database login
