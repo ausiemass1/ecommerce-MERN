@@ -6,7 +6,7 @@ export const upload = multer({
   storage: multerS3({
     s3,
     bucket: process.env.AWS_S3_BUCKET!,
-    acl: "public-read",
+    // acl: "public-read",
     contentType: multerS3.AUTO_CONTENT_TYPE,
     key: (_req, file, cb) => {
       const fileName = `products/${Date.now()}-${file.originalname}`;
